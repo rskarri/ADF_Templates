@@ -1,0 +1,13 @@
+{
+	"name": "DS_SapHanaTable_DEV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SapHana",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SapHanaTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

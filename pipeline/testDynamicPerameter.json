@@ -1,0 +1,39 @@
+{
+	"name": "testDynamicPerameter",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "valName",
+					"value": {
+						"value": "@pipeline().parameters.Name",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"Name": {
+				"type": "string"
+			},
+			"Last Name": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"valName": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "DEV"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-07-26T09:46:16Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

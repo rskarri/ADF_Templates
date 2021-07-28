@@ -1,0 +1,182 @@
+{
+	"name": "SalesInvoice_Delta_Tillnow_Pipeline_copy1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Old Watermark Value",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select WatermarkValue  FROM [dbo].[WatermarkTable] where TableName='InvoiceSalesDataQA'",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Copy SalesInvoice odata to SQL",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "previousDate",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ODataSource",
+						"query": {
+							"value": "$filter=Invoicecrdate gt datetime'@{activity('Old Watermark Value').output.firstRow.WatermarkValue}' and Invoicecrdate le datetime'@{variables('prevDate')}'",
+							"type": "Expression"
+						},
+						"httpRequestTimeout": "00:05:00"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_OData_SAP_HANA_QA",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_AzureSqlTable_SalesInvoice",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "previousDate",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Old Watermark Value",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "prevDate",
+					"value": {
+						"value": "@substring(utcnow(), 0, 18)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "updateWaterMark",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "New Watermark Value",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SP_update_watermark]",
+					"storedProcedureParameters": {
+						"TabName": {
+							"value": "InvoiceSalesDataQA",
+							"type": "String"
+						},
+						"LastModifiedtime": {
+							"value": {
+								"value": "@activity('New Watermark Value').output.firstRow.maxValue",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "New Watermark Value",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Copy SalesInvoice odata to SQL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "  select MAX( CONCAT( CAST(Invoicecrdate as date),' ',(Invoicecrtime)) ) as maxValue FROM [dbo].[InvoiceSalesDataQA]",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"variables": {
+			"prevDate": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "QA"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-07-27T07:19:11Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,17 @@
+{
+	"name": "DS_AzureSqlTable_SalesInvoice2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AzureSqlDatabase",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "InvoiceSalesDataQA2"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

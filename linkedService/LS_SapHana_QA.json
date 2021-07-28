@@ -1,0 +1,16 @@
+{
+	"name": "LS_SapHana_QA",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SapHana",
+		"typeProperties": {
+			"connectionString": "servernode=172.26.2.219:33015;uid=carbynetechdb",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJmYjI2MmVhOC05M2RhLTQ0MmYtODNhZi00NWU1ODMxZDM5MGMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime-SAP-HANA",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

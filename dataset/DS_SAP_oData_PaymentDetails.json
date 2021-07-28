@@ -1,0 +1,19 @@
+{
+	"name": "DS_SAP_oData_PaymentDetails",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SAP_oData_PaymentDetails",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "QA/PaymentDetails"
+		},
+		"annotations": [],
+		"type": "ODataResource",
+		"schema": [],
+		"typeProperties": {
+			"path": "PaymentDetailsSet"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,18 @@
+{
+	"name": "LS_SAP_oData_InvoiceSales",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "OData",
+		"typeProperties": {
+			"url": "http://172.26.2.228:8000/sap/opu/odata/sap/ZITRSDBILLCDS_SRV",
+			"authenticationType": "Basic",
+			"userName": "carbynetech",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIwMGYxNjM0ZC03MDVjLTQ4MzItOThhMC1hMGNkOWY2NjMzYzkiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime-SAP-HANA",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

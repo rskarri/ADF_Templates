@@ -1,0 +1,16 @@
+{
+	"name": "DS_ODataResource_hana",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OData_SAP_HANA",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "ODataResource",
+		"schema": [],
+		"typeProperties": {
+			"path": "SalesDataSet"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,2191 @@
+{
+	"name": "SalesInvoice_day_wise_Full_Load_oData_QA_pipeline_copy2",
+	"properties": {
+		"activities": [
+			{
+				"name": "Until1",
+				"type": "Until",
+				"dependsOn": [
+					{
+						"activity": "startValuefomPipeline",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@bool(variables('flag'))",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "fromDate",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "fromDate",
+								"value": {
+									"value": "@addToTime(variables('startValue'), 1, 'Day')",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "startValue",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "fromDate",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "startValue",
+								"value": {
+									"value": "@variables('fromDate')",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "removeZ",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "fromDate",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "fromDateRZ",
+								"value": {
+									"value": "@substring(variables('fromDate'), 0, 18)",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "If Condition2",
+							"type": "IfCondition",
+							"dependsOn": [
+								{
+									"activity": "removeZ",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								},
+								{
+									"activity": "startValue",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"expression": {
+									"value": "@if(equals(adddays(variables('startValue'),0),adddays(pipeline().parameters.P_EndDate,1)) , 'true', 'false')",
+									"type": "Expression"
+								},
+								"ifFalseActivities": [
+									{
+										"name": "Copy SalesInvoice to SQL",
+										"type": "Copy",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "ODataSource",
+												"query": {
+													"value": "$filter=Invoicecrdate eq datetime'@{variables('fromDateRZ')}'",
+													"type": "Expression"
+												},
+												"httpRequestTimeout": "00:30:00"
+											},
+											"sink": {
+												"type": "AzureSqlSink",
+												"writeBehavior": "insert",
+												"disableMetricsCollection": false
+											},
+											"enableStaging": false,
+											"enableSkipIncompatibleRow": false,
+											"translator": {
+												"type": "TabularTranslator",
+												"mappings": [
+													{
+														"source": {
+															"name": "Billingdoc",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Billingdoc",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Item",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Item",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Companycode",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Companycode",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Salesorg",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Salesorg",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Ewaybillno",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Ewaybillno",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Exportexinvno",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Exportexinvno",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Exportexinvdt",
+															"type": "DateTime"
+														},
+														"sink": {
+															"name": "Exportexinvdt",
+															"type": "DateTime"
+														}
+													},
+													{
+														"source": {
+															"name": "Accexchangerate",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Accexchangerate",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Netvalue",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Netvalue",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Doccurrency",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Doccurrency",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Loccuramt",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Loccuramt",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Gstin",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Gstin",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Region",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Region",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Regionname",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Regionname",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Regiondlvplant",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Regiondlvplant",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Customerrefdate",
+															"type": "DateTime"
+														},
+														"sink": {
+															"name": "Customerrefdate",
+															"type": "DateTime"
+														}
+													},
+													{
+														"source": {
+															"name": "Grossvalue",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Grossvalue",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Invoicedate",
+															"type": "DateTime"
+														},
+														"sink": {
+															"name": "Invoicedate",
+															"type": "DateTime"
+														}
+													},
+													{
+														"source": {
+															"name": "Invoicetime",
+															"type": "TimeSpan"
+														},
+														"sink": {
+															"name": "Invoicetime",
+															"type": "TimeSpan"
+														}
+													},
+													{
+														"source": {
+															"name": "Changedon",
+															"type": "DateTime"
+														},
+														"sink": {
+															"name": "Changedon",
+															"type": "DateTime"
+														}
+													},
+													{
+														"source": {
+															"name": "Businessplace",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Businessplace",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Plant",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Plant",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Plantdesc",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Plantdesc",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Billingtype",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Billingtype",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Deldocno",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Deldocno",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Deldocdate",
+															"type": "DateTime"
+														},
+														"sink": {
+															"name": "Deldocdate",
+															"type": "DateTime"
+														}
+													},
+													{
+														"source": {
+															"name": "Orderno",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Orderno",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Orderqunatity",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Orderqunatity",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Ordercreatedtime",
+															"type": "TimeSpan"
+														},
+														"sink": {
+															"name": "Ordercreatedtime",
+															"type": "TimeSpan"
+														}
+													},
+													{
+														"source": {
+															"name": "Requesteddeldate",
+															"type": "DateTime"
+														},
+														"sink": {
+															"name": "Requesteddeldate",
+															"type": "DateTime"
+														}
+													},
+													{
+														"source": {
+															"name": "Orderstatus",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Orderstatus",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Salesordertype",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Salesordertype",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Distchannel",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Distchannel",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Division",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Division",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Customer",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Customer",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Customername",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Customername",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Customercountry",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Customercountry",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Customercountrydesc",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Customercountrydesc",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Materialpricegrp",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Materialpricegrp",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Materialpricegrpdesc",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Materialpricegrpdesc",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Material",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Material",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Materialdes",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Materialdes",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Brand",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Brand",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Brandname",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Brandname",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Productgroup",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Productgroup",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Productgrpdesc",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Productgrpdesc",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Productheirarchy",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Productheirarchy",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Productheirarchydes",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Productheirarchydes",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Materialtype",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Materialtype",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Materialgrp1",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Materialgrp1",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Materialgrp1des",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Materialgrp1des",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Materialgrp2",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Materialgrp2",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Materialgrp2des",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Materialgrp2des",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Materialgrp3",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Materialgrp3",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Materialgrp3des",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Materialgrp3des",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Materialgrp4",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Materialgrp4",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Materialgrp4des",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Materialgrp4des",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Materialgrp5",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Materialgrp5",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Materialgrp5des",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Materialgrp5des",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Pckmatgrp",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Pckmatgrp",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Pckmatgrpdes",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Pckmatgrpdes",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Salesgrp",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Salesgrp",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Salesgrpdes",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Salesgrpdes",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Salesofc",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Salesofc",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Salesofcdes",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Salesofcdes",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Salesdistrict",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Salesdistrict",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Salesdistrictname",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Salesdistrictname",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Orderpono",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Orderpono",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "City",
+															"type": "String"
+														},
+														"sink": {
+															"name": "City",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Crcontrolarea",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Crcontrolarea",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Uom",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Uom",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Billoflanding",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Billoflanding",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Invoicecrdate",
+															"type": "DateTime"
+														},
+														"sink": {
+															"name": "Invoicecrdate",
+															"type": "DateTime"
+														}
+													},
+													{
+														"source": {
+															"name": "Invoicecrtime",
+															"type": "TimeSpan"
+														},
+														"sink": {
+															"name": "Invoicecrtime",
+															"type": "TimeSpan"
+														}
+													},
+													{
+														"source": {
+															"name": "Invoicecruser",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Invoicecruser",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Invservrenddate",
+															"type": "DateTime"
+														},
+														"sink": {
+															"name": "Invservrenddate",
+															"type": "DateTime"
+														}
+													},
+													{
+														"source": {
+															"name": "Ordercreateddate",
+															"type": "DateTime"
+														},
+														"sink": {
+															"name": "Ordercreateddate",
+															"type": "DateTime"
+														}
+													},
+													{
+														"source": {
+															"name": "Ordercreateduser",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Ordercreateduser",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Oderpricingdate",
+															"type": "DateTime"
+														},
+														"sink": {
+															"name": "Oderpricingdate",
+															"type": "DateTime"
+														}
+													},
+													{
+														"source": {
+															"name": "Delcrdate",
+															"type": "DateTime"
+														},
+														"sink": {
+															"name": "Delcrdate",
+															"type": "DateTime"
+														}
+													},
+													{
+														"source": {
+															"name": "Delcrname",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Delcrname",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Delgoodsissue",
+															"type": "DateTime"
+														},
+														"sink": {
+															"name": "Delgoodsissue",
+															"type": "DateTime"
+														}
+													},
+													{
+														"source": {
+															"name": "Wholesaleid",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Wholesaleid",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Retailid",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Retailid",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Meansoftrans",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Meansoftrans",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Meansoftransdesc",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Meansoftransdesc",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Vehicleno",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Vehicleno",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Plannedgi",
+															"type": "DateTime"
+														},
+														"sink": {
+															"name": "Plannedgi",
+															"type": "DateTime"
+														}
+													},
+													{
+														"source": {
+															"name": "Shiptoparty",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Shiptoparty",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Shiptopartydesc",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Shiptopartydesc",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Exchangerate",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Exchangerate",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Orderreason",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Orderreason",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Shippingcountrycode",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Shippingcountrycode",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Shippingcountrydesc",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Shippingcountrydesc",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Shippingcitycode",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Shippingcitycode",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Countycode",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Countycode",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Countydesc",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Countydesc",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Citycode",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Citycode",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Citydesc",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Citydesc",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Customergrp",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Customergrp",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Customergrpdesc",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Customergrpdesc",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Custpricinggrp",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Custpricinggrp",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Custpricinggrpdesc",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Custpricinggrpdesc",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Reference",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Reference",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Referencebillno",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Referencebillno",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Billedqtyinsku",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Billedqtyinsku",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Leagalstatus",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Leagalstatus",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Stategsttax",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Stategsttax",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Centralgsttax",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Centralgsttax",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Integrgsttax",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Integrgsttax",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Gstvalueininr",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Gstvalueininr",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Netvalueinctaxininr",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Netvalueinctaxininr",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Gstvalue",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Gstvalue",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Netvalueinctax",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Netvalueinctax",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Taxcode",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Taxcode",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Batch",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Batch",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Incoterms",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Incoterms",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Incotermname",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Incotermname",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Payterms",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Payterms",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Paytremsdes",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Paytremsdes",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Usageindicator",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Usageindicator",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Pricelisttype",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Pricelisttype",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Pricelistname",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Pricelistname",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Taxtype",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Taxtype",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Pricingdate",
+															"type": "DateTime"
+														},
+														"sink": {
+															"name": "Pricingdate",
+															"type": "DateTime"
+														}
+													},
+													{
+														"source": {
+															"name": "Locationcode",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Locationcode",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Customerclass",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Customerclass",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Difference",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Difference",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Businessarea",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Businessarea",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Profitcenter",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Profitcenter",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Canceledstatus",
+															"type": "Boolean"
+														},
+														"sink": {
+															"name": "Canceledstatus",
+															"type": "Boolean"
+														}
+													},
+													{
+														"source": {
+															"name": "Taxcollectedsrc",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Taxcollectedsrc",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Specialdiscount",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Specialdiscount",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Quantitydiscount",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Quantitydiscount",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Tradediscount",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Tradediscount",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Basicprice",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Basicprice",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Basicpricedif",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Basicpricedif",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Mrpprice",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Mrpprice",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Igsttax",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Igsttax",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Freightdiscount",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Freightdiscount",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Freightheader",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Freightheader",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Freightdesc",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Freightdesc",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Adhocdealermargin",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Adhocdealermargin",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Dealermargin",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Dealermargin",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Earlypayrebate",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Earlypayrebate",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Cashdiscountmanual",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Cashdiscountmanual",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Others",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Others",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Exportcommission",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Exportcommission",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Airfreight",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Airfreight",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Pyqtydiscount",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Pyqtydiscount",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Pyfreightdiscount",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Pyfreightdiscount",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Pyearlypayrebate",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Pyearlypayrebate",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Stategstininr",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Stategstininr",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Integratedgstininr",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Integratedgstininr",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Centralgstininr",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Centralgstininr",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Stategst",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Stategst",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Integratedgst",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Integratedgst",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Centralgst",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Centralgst",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Roundoff",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Roundoff",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Sub",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Sub",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Basicmaterial",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Basicmaterial",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Duedate",
+															"type": "DateTime"
+														},
+														"sink": {
+															"name": "Duedate",
+															"type": "DateTime"
+														}
+													},
+													{
+														"source": {
+															"name": "Portcode",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Portcode",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Shippingbillno",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Shippingbillno",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Shippingbilldt",
+															"type": "DateTime"
+														},
+														"sink": {
+															"name": "Shippingbilldt",
+															"type": "DateTime"
+														}
+													},
+													{
+														"source": {
+															"name": "Fobvalue",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Fobvalue",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Dispatchid",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Dispatchid",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Dispatchdt",
+															"type": "DateTime"
+														},
+														"sink": {
+															"name": "Dispatchdt",
+															"type": "DateTime"
+														}
+													},
+													{
+														"source": {
+															"name": "Pdcchequeno",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Pdcchequeno",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Pdcchequedate",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Pdcchequedate",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Pdcchequeval",
+															"type": "Decimal"
+														},
+														"sink": {
+															"name": "Pdcchequeval",
+															"type": "Decimal"
+														}
+													},
+													{
+														"source": {
+															"name": "Pdcbankname",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Pdcbankname",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Controlcode",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Controlcode",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Einvirn",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Einvirn",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Shippingcondition",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Shippingcondition",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Containerid",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Containerid",
+															"type": "String"
+														}
+													},
+													{
+														"source": {
+															"name": "Lrnumber",
+															"type": "String"
+														},
+														"sink": {
+															"name": "Lrnumber",
+															"type": "String"
+														}
+													}
+												]
+											}
+										},
+										"inputs": [
+											{
+												"referenceName": "DS_OData_SAP_HANA_QA",
+												"type": "DatasetReference"
+											}
+										],
+										"outputs": [
+											{
+												"referenceName": "DS_AzureSqlTable_SalesInvoice",
+												"type": "DatasetReference"
+											}
+										]
+									}
+								],
+								"ifTrueActivities": [
+									{
+										"name": "Set variable1",
+										"type": "SetVariable",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "flag",
+											"value": {
+												"value": "@bool('true')",
+												"type": "Expression"
+											}
+										}
+									}
+								]
+							}
+						}
+					],
+					"timeout": "0.00:00:00"
+				}
+			},
+			{
+				"name": "startValuefomPipeline",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "delete old records",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "startValue",
+					"value": {
+						"value": "@subtractFromTime(pipeline().parameters.P_StartDate, 1, 'Day')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "updateWaterMark",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "New Watermark Time Value",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SP_update_watermark]",
+					"storedProcedureParameters": {
+						"TabName": {
+							"value": "InvoiceSales",
+							"type": "String"
+						},
+						"LastModifiedDate": {
+							"value": {
+								"value": "@activity('New Watermark Date Value').output.firstRow.maxDate",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						},
+						"LastModifiedtime": {
+							"value": {
+								"value": "@activity('New Watermark Time Value').output.firstRow.maxTime",
+								"type": "Expression"
+							},
+							"type": "Timespan"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "New Watermark Date Value",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Until1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select MAX(Invoicecrdate ) as maxDate FROM [dbo].[InvoiceSales]",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "New Watermark Time Value",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "New Watermark Date Value",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select MAX(Invoicecrtime) as maxTime FROM [dbo].[InvoiceSales] where Invoicecrdate= ( select MAX(Invoicecrdate ) FROM [dbo].[InvoiceSales])",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Set variable2",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "d_startdate",
+					"value": {
+						"value": "@substring(pipeline().parameters.P_StartDate,0,18)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Set variable2_copy1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Set variable2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "d_enddate",
+					"value": {
+						"value": "@substring(pipeline().parameters.P_EndDate,0,18)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "delete old records",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Set variable2_copy1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SP_deleteRecords]",
+					"storedProcedureParameters": {
+						"D_StartDate": {
+							"value": {
+								"value": "@variables('d_startdate')",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"D_EndDate": {
+							"value": {
+								"value": "@variables('d_enddate')",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"P_StartDate": {
+				"type": "string",
+				"defaultValue": "2019-11-01T00:00:00Z"
+			},
+			"P_EndDate": {
+				"type": "string",
+				"defaultValue": "2021-07-25T00:00:00Z"
+			}
+		},
+		"variables": {
+			"flag": {
+				"type": "Boolean",
+				"defaultValue": false
+			},
+			"startValue": {
+				"type": "String"
+			},
+			"fromDate": {
+				"type": "String"
+			},
+			"fromDateRZ": {
+				"type": "String"
+			},
+			"d_startdate": {
+				"type": "String"
+			},
+			"d_enddate": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "QA/InvoiceSales"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-07-28T08:19:05Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

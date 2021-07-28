@@ -1,0 +1,365 @@
+{
+	"name": "SQL_Dynamic_day_wise_Full_Load_oData_QA_pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Until1",
+				"type": "Until",
+				"dependsOn": [
+					{
+						"activity": "startValuefomPipeline",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@bool(variables('flag'))",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "fromDate",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "fromDate",
+								"value": {
+									"value": "@addToTime(variables('startValue'), 1, 'Day')",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "startValue",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "fromDate",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "startValue",
+								"value": {
+									"value": "@variables('fromDate')",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "removeZ",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "fromDate",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "fromDateRZ",
+								"value": {
+									"value": "@substring(variables('fromDate'), 0, 18)",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "If Condition2",
+							"type": "IfCondition",
+							"dependsOn": [
+								{
+									"activity": "removeZ",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"expression": {
+									"value": "@if(equals(addHours(variables('fromDate'),0),addHours(pipeline().parameters.P_EndDate,0)) , 'true', 'false')",
+									"type": "Expression"
+								},
+								"ifFalseActivities": [
+									{
+										"name": "Copy SalesInvoice to SQL",
+										"type": "Copy",
+										"dependsOn": [
+											{
+												"activity": "Set variable2",
+												"dependencyConditions": [
+													"Succeeded"
+												]
+											}
+										],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "ODataSource",
+												"query": {
+													"value": "@variables('dynamicQ')",
+													"type": "Expression"
+												},
+												"httpRequestTimeout": "00:05:00"
+											},
+											"sink": {
+												"type": "AzureSqlSink",
+												"writeBehavior": "insert",
+												"disableMetricsCollection": false
+											},
+											"enableStaging": false,
+											"enableSkipIncompatibleRow": false
+										},
+										"inputs": [
+											{
+												"referenceName": "DS_Dynamic_SAP_QA_oData",
+												"type": "DatasetReference",
+												"parameters": {
+													"SourceTable": {
+														"value": "@pipeline().parameters.P_OdataSet",
+														"type": "Expression"
+													}
+												}
+											}
+										],
+										"outputs": [
+											{
+												"referenceName": "DS_AzureSqlTable_Dynmamic",
+												"type": "DatasetReference",
+												"parameters": {
+													"SQLTableName": "fdsf"
+												}
+											}
+										]
+									},
+									{
+										"name": "Set variable2",
+										"type": "SetVariable",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "dynamicQ",
+											"value": {
+												"value": "$filter=Invoicecrdate eq datetime'@{variables('fromDateRZ')}'",
+												"type": "Expression"
+											}
+										}
+									}
+								],
+								"ifTrueActivities": [
+									{
+										"name": "Set variable1",
+										"type": "SetVariable",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "flag",
+											"value": {
+												"value": "@bool('true')",
+												"type": "Expression"
+											}
+										}
+									}
+								]
+							}
+						}
+					],
+					"timeout": "0.00:00:00"
+				}
+			},
+			{
+				"name": "startValuefomPipeline",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "startValue",
+					"value": {
+						"value": "@subtractFromTime(pipeline().parameters.P_StartDate, 1, 'Day')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "updateWaterMark",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "New Watermark Time Value",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SP_update_watermark]",
+					"storedProcedureParameters": {
+						"TabName": {
+							"value": "InvoiceSales",
+							"type": "String"
+						},
+						"LastUpdatedDate": {
+							"value": {
+								"value": "@activity('New Watermark Date Value').output.firstRow.maxDate",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						},
+						"LastUpdatedTime": {
+							"value": {
+								"value": "@activity('New Watermark Time Value').output.firstRow.maxTime",
+								"type": "Expression"
+							},
+							"type": "Timespan"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "New Watermark Date Value",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Until1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select MAX(Invoicecrdate ) as maxDate FROM [dbo].[InvoiceSales]",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "New Watermark Time Value",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "New Watermark Date Value",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select MAX(Invoicecrtime) as maxTime FROM [dbo].[InvoiceSales] where Invoicecrdate= ( select MAX(Invoicecrdate ) FROM [dbo].[InvoiceSales])",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"P_StartDate": {
+				"type": "string",
+				"defaultValue": "2019-11-01T00:00:00Z"
+			},
+			"P_EndDate": {
+				"type": "string",
+				"defaultValue": "2021-07-25T00:00:00Z"
+			},
+			"P_OdataSet": {
+				"type": "string",
+				"defaultValue": "SalesDataSet"
+			},
+			"P_Query": {
+				"type": "string",
+				"defaultValue": "$filter=Invoicecrdate eq datetime'@{variables('fromDateRZ')}'"
+			},
+			"P_SQL_Table": {
+				"type": "string",
+				"defaultValue": "InvoiceSales"
+			}
+		},
+		"variables": {
+			"flag": {
+				"type": "Boolean",
+				"defaultValue": false
+			},
+			"startValue": {
+				"type": "String"
+			},
+			"fromDate": {
+				"type": "String"
+			},
+			"fromDateRZ": {
+				"type": "String"
+			},
+			"dynamicQ": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "QA"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-07-28T09:59:32Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,9 @@
+{
+	"name": "CFL-datafactory-QA01",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "4d11c90c-bcd3-48f1-8ad2-041b7934af84",
+		"tenantId": "25e09a3d-945e-45f8-b5d9-a84eeede55c5"
+	}
+}

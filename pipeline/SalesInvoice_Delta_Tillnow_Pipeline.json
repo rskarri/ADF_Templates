@@ -1,0 +1,285 @@
+{
+	"name": "SalesInvoice_Delta_Tillnow_Pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Old Time WatermarkValue",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Old Date WatermarkValue",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select TimeValue  FROM [dbo].[WatermarkTable] where TableName='InvoiceSales'",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Copy SalesInvoice odata to SQL",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "set Next Date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ODataSource",
+						"query": {
+							"value": "$filter=(Invoicecrdate gt datetime'@{activity('Old Date WatermarkValue').output.firstRow.DateValue}' and Invoicecrtime gt time'@{variables('timeFormat')}') or (Invoicecrdate ge datetime'@{variables('nextDate')}' and Invoicecrtime ge time'PT00H00M00S')",
+							"type": "Expression"
+						},
+						"httpRequestTimeout": "00:05:00"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_OData_SAP_HANA_QA",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_AzureSqlTable_SalesInvoice",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Old Date WatermarkValue",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select DateValue  FROM [dbo].[WatermarkTable] where TableName='InvoiceSales'",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "updateWaterMark",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "New Watermark Time Value",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SP_update_watermark]",
+					"storedProcedureParameters": {
+						"TabName": {
+							"value": "InvoiceSales",
+							"type": "String"
+						},
+						"LastModifiedDate": {
+							"value": {
+								"value": "@activity('New Watermark Date Value').output.firstRow.maxDate",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						},
+						"LastModifiedtime": {
+							"value": {
+								"value": "@activity('New Watermark Time Value').output.firstRow.maxTime",
+								"type": "Expression"
+							},
+							"type": "Timespan"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "New Watermark Date Value",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Copy SalesInvoice odata to SQL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select MAX(Invoicecrdate ) as maxDate FROM [dbo].[InvoiceSales]",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "New Watermark Time Value",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "New Watermark Date Value",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select MAX(Invoicecrtime) as maxTime FROM [dbo].[InvoiceSales] where Invoicecrdate= ( select MAX(Invoicecrdate ) FROM [dbo].[InvoiceSales])",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "changeTimeFormat",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Old Time WatermarkValue",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "timeFormat",
+					"value": {
+						"value": "@concat( 'PT',substring(activity('Old Time WatermarkValue').output.firstRow.TimeValue, 0,2 ), 'H', substring(activity('Old Time WatermarkValue').output.firstRow.TimeValue, 3,2 ) ,'M', substring(activity('Old Time WatermarkValue').output.firstRow.TimeValue, 6,2 ) ,'S')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "set Next Date",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "changeTimeFormat",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "nextDate",
+					"value": {
+						"value": "@substring(addToTime(activity('Old Date WatermarkValue').output.firstRow.DateValue, 1, 'Day'), 0, 18)",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"prevDate": {
+				"type": "String"
+			},
+			"timeFormat": {
+				"type": "String"
+			},
+			"nextDate": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "QA/InvoiceSales"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-07-27T17:14:26Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

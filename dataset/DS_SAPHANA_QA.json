@@ -1,0 +1,25 @@
+{
+	"name": "DS_SAPHANA_QA",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SapHana_QA",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"SchemaName": {
+				"type": "string"
+			},
+			"TableName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SapHanaTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "SAPHANADB",
+			"table": "ZSDBILLCDS"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

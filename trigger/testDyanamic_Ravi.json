@@ -1,0 +1,28 @@
+{
+	"name": "testDyanamic_Ravi",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "testDynamicPerameter",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"Name": "Ravi",
+					"Last Name": "Karri"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Month",
+				"interval": 15,
+				"startTime": "2021-07-26T09:46:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

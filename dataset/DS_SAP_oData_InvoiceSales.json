@@ -1,0 +1,19 @@
+{
+	"name": "DS_SAP_oData_InvoiceSales",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SAP_oData_InvoiceSales",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "QA/InvoiceSales"
+		},
+		"annotations": [],
+		"type": "ODataResource",
+		"schema": [],
+		"typeProperties": {
+			"path": "SalesDataSet"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
