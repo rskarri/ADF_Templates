@@ -10,9 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "fail2.csv",
-				"folderPath": "input-data",
-				"fileSystem": "datafactory-data"
+				"fileName": "Invoice_Sales.csv",
+				"folderPath": "InvoiceSales",
+				"fileSystem": "sapdata"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
