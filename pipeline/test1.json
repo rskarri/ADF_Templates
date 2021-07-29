@@ -1,0 +1,289 @@
+{
+	"name": "test1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set startDate",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "StartDate",
+					"value": {
+						"value": "@concat(substring(getPastTime(1, 'Day'),0,10),'T00:00:00')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Set ZStartDate",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Set startDate",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "zStartDate",
+					"value": {
+						"value": "@substring(variables('StartDate'),0,18)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "delete old records",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Set ZStartDate",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SP_DeleteTable_DateRange]",
+					"storedProcedureParameters": {
+						"D_StartDate": {
+							"value": {
+								"value": "@variables('zStartDate')",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"D_EndDate": {
+							"value": {
+								"value": "@variables('zStartDate')",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"TableName": {
+							"value": {
+								"value": "@variables('SQL_Table')",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"D_ColName": {
+							"value": "Postingdate",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Copy PaymentDetails to SQL",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "delete old records",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ODataSource",
+						"query": {
+							"value": "$filter=Postingdate eq datetime'@{variables('zStartDate')}'",
+							"type": "Expression"
+						},
+						"httpRequestTimeout": "00:30:00"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"enableSkipIncompatibleRow": true
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_SAP_oData_PaymentDetails",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_AzureSqlTable_Dynmamic",
+						"type": "DatasetReference",
+						"parameters": {
+							"SQLTableName": {
+								"value": "@variables('SQL_Table')",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "updateWaterMark",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "New Watermark Time Value",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SP_update_watermark]",
+					"storedProcedureParameters": {
+						"TabName": {
+							"value": {
+								"value": "@variables('SQL_Table')",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"LastModifiedDate": {
+							"value": {
+								"value": "@activity('New Watermark Date Value').output.firstRow.maxDate",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						},
+						"LastModifiedtime": {
+							"value": {
+								"value": "@activity('New Watermark Time Value').output.firstRow.maxTime",
+								"type": "Expression"
+							},
+							"type": "Timespan"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "New Watermark Date Value",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Copy PaymentDetails to SQL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select MAX(Postingdate ) as maxDate FROM [dbo].[PaymentDetails]",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "New Watermark Time Value",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "New Watermark Date Value",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select MAX(Postingdate) as maxTime FROM [dbo].[PaymentDetails] where Postingdate= ( select MAX(Postingdate ) FROM [dbo].[PaymentDetails])",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"variables": {
+			"StartDate": {
+				"type": "String"
+			},
+			"EndDate": {
+				"type": "String"
+			},
+			"zStartDate": {
+				"type": "String"
+			},
+			"SQL_Table": {
+				"type": "String",
+				"defaultValue": "PaymentDetails"
+			},
+			"flag": {
+				"type": "Boolean",
+				"defaultValue": false
+			}
+		},
+		"annotations": []
+	}
+}
