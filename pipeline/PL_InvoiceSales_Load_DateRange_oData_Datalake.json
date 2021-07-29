@@ -3,49 +3,9 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "StartDate",
-				"type": "SetVariable",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "d_startdate",
-					"value": {
-						"value": "@substring(pipeline().parameters.P_StartDate,0,18)",
-						"type": "Expression"
-					}
-				}
-			},
-			{
-				"name": "Enddate",
-				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "StartDate",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "d_enddate",
-					"value": {
-						"value": "@substring(pipeline().parameters.P_EndDate,0,18)",
-						"type": "Expression"
-					}
-				}
-			},
-			{
 				"name": "Copy PaymentDetails to SQL_copy1",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Enddate",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -58,7 +18,7 @@
 					"source": {
 						"type": "ODataSource",
 						"query": {
-							"value": "$filter=Invoicecrdate ge datetime'@{variables('d_startdate')}' and Invoicecrdate le datetime'@{variables('d_enddate')}' ",
+							"value": "$filter=Invoicecrdate ge datetime'2020-08-01T00:00:00' and Invoicecrdate le datetime'2020-09-30T10:00:0'",
 							"type": "Expression"
 						},
 						"httpRequestTimeout": "00:30:00"
