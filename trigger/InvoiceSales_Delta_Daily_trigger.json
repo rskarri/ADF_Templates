@@ -1,0 +1,24 @@
+{
+	"name": "InvoiceSales_Delta_Daily_trigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "PL_InvoiceSales_DELTA_oData_SQL",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2021-07-29T19:30:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}
