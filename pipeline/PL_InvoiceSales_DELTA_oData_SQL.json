@@ -217,7 +217,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select MAX(Postingdate ) as maxDate FROM [dbo].[PaymentDetails]",
+							"value": "select MAX(Invoicecrdate ) as maxDate FROM [dbo].[InvoiceSales]",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -252,7 +252,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select MAX(Postingdate) as maxTime FROM [dbo].[PaymentDetails] where Postingdate= ( select MAX(Postingdate ) FROM [dbo].[PaymentDetails])",
+							"value": "select MAX(Invoicecrdate) as maxTime FROM [dbo].[InvoiceSales] where Invoicecrdate= ( select MAX(Invoicecrdate ) FROM [dbo].[InvoiceSales])",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
