@@ -252,7 +252,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select MAX(Invoicecrdate) as maxTime FROM [dbo].[InvoiceSales] where Invoicecrdate= ( select MAX(Invoicecrdate ) FROM [dbo].[InvoiceSales])",
+							"value": "select MAX(Invoicecrtime) as maxTime FROM [dbo].[InvoiceSales] where Invoicecrdate= ( select MAX(Invoicecrdate ) FROM [dbo].[InvoiceSales])",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
