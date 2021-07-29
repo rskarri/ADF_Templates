@@ -113,7 +113,7 @@
 											"source": {
 												"type": "ODataSource",
 												"query": {
-													"value": "$filter=Postingdate eq datetime'@{variables('fromDateRZ')}'",
+													"value": "$filter=Invoicecrdate eq datetime'@{variables('fromDateRZ')}'",
 													"type": "Expression"
 												},
 												"httpRequestTimeout": "00:30:00"
@@ -128,7 +128,7 @@
 										},
 										"inputs": [
 											{
-												"referenceName": "DS_SAP_oData_PaymentDetails",
+												"referenceName": "DS_SAP_oData_InvoiceSales",
 												"type": "DatasetReference"
 											}
 										],
@@ -137,7 +137,7 @@
 												"referenceName": "DS_AzureSqlTable_Dynmamic",
 												"type": "DatasetReference",
 												"parameters": {
-													"SQLTableName": "PaymentDetails"
+													"SQLTableName": "InvoiceSales"
 												}
 											}
 										]
@@ -371,11 +371,11 @@
 							"type": "String"
 						},
 						"TableName": {
-							"value": "PaymentDetails",
+							"value": "InvoiceSales",
 							"type": "String"
 						},
 						"D_ColName": {
-							"value": "Postingdate",
+							"value": "Invoicecrdate",
 							"type": "String"
 						}
 					}
