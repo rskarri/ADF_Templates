@@ -149,7 +149,7 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "New Watermark Time Value",
+						"activity": "New Watermark Date Value",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -182,7 +182,7 @@
 						},
 						"LastModifiedtime": {
 							"value": {
-								"value": "@activity('New Watermark Time Value').output.firstRow.maxTime",
+								"value": "00:00:00",
 								"type": "Expression"
 							},
 							"type": "Timespan"
@@ -218,41 +218,6 @@
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
 							"value": "select MAX(Postingdate ) as maxDate FROM [dbo].[PaymentDetails]",
-							"type": "Expression"
-						},
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"dataset": {
-						"referenceName": "DS_AzureSqlTable",
-						"type": "DatasetReference"
-					}
-				}
-			},
-			{
-				"name": "New Watermark Time Value",
-				"type": "Lookup",
-				"dependsOn": [
-					{
-						"activity": "New Watermark Date Value",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderQuery": {
-							"value": "select MAX(Postingdate) as maxTime FROM [dbo].[PaymentDetails] where Postingdate= ( select MAX(Postingdate ) FROM [dbo].[PaymentDetails])",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
