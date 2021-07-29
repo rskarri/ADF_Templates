@@ -1,0 +1,72 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "CFL-datafactory-QA01"
+		},
+		"LS_AzureDataLakeStorage_accountKey": {
+			"value": ""
+		},
+		"LS_AzureSqlDatabase_connectionString": {
+			"value": ""
+		},
+		"LS_SAP_oData_InvoiceSales_password": {
+			"value": ""
+		},
+		"LS_SAP_oData_PaymentDetails_password": {
+			"value": ""
+		},
+		"LS_SapHana_connectionString": {
+			"value": ""
+		},
+		"LS_SapHana_QA_connectionString": {
+			"value": ""
+		},
+		"OData_SAP_HANA_password": {
+			"value": ""
+		},
+		"oData_SAP_HANA_QA_password": {
+			"value": ""
+		},
+		"LS_AzureDataLakeStorage_properties_typeProperties_url": {
+			"value": "https://straccdatalakeqa.dfs.core.windows.net"
+		},
+		"LS_SAP_oData_InvoiceSales_properties_typeProperties_url": {
+			"value": "http://172.26.2.228:8000/sap/opu/odata/sap/ZITRSDBILLCDS_SRV"
+		},
+		"LS_SAP_oData_InvoiceSales_properties_typeProperties_userName": {
+			"value": "carbynetech"
+		},
+		"LS_SAP_oData_PaymentDetails_properties_typeProperties_url": {
+			"value": "http://172.26.2.228:8000/sap/opu/odata/sap/ZFIREP1430CDS_SRV"
+		},
+		"LS_SAP_oData_PaymentDetails_properties_typeProperties_userName": {
+			"value": "carbynetech"
+		},
+		"OData_SAP_HANA_properties_typeProperties_url": {
+			"value": "http://172.26.150.72:8001/sap/opu/odata/sap/ZITRSDBILLCDS_SRV"
+		},
+		"OData_SAP_HANA_properties_typeProperties_userName": {
+			"value": "Carbynetech"
+		},
+		"oData_SAP_HANA_QA_properties_typeProperties_url": {
+			"value": "http://172.26.2.228:8000/sap/opu/odata/sap/ZITRSDBILLCDS_SRV"
+		},
+		"oData_SAP_HANA_QA_properties_typeProperties_userName": {
+			"value": "carbynetech"
+		},
+		"testDyanamic_Ravi_properties_testDynamicPerameter_parameters_Name": {
+			"value": "Ravi"
+		},
+		"testDyanamic_Ravi_properties_testDynamicPerameter_parameters_Last Name": {
+			"value": "Karri"
+		},
+		"trigger_chainmayi_properties_testDynamicPerameter_parameters_Name": {
+			"value": "chianmayi"
+		},
+		"trigger_chainmayi_properties_testDynamicPerameter_parameters_Last Name": {
+			"value": "karri"
+		}
+	}
+}
