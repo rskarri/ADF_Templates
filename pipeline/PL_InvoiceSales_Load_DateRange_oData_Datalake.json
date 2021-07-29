@@ -18,7 +18,7 @@
 					"source": {
 						"type": "ODataSource",
 						"query": {
-							"value": "$filter=Invoicecrdate ge datetime'2020-08-01T00:00:00' and Invoicecrdate le datetime'2020-09-30T10:00:0'",
+							"value": "$filter=Invoicecrdate eq datetime'2020-08-01T00:00:00'",
 							"type": "Expression"
 						},
 						"httpRequestTimeout": "00:30:00"
