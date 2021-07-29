@@ -137,7 +137,10 @@
 												"referenceName": "DS_AzureSqlTable_Dynmamic",
 												"type": "DatasetReference",
 												"parameters": {
-													"SQLTableName": "PaymentDetails"
+													"SQLTableName": {
+														"value": "@variables('SQL_Table')",
+														"type": "Expression"
+													}
 												}
 											}
 										]
@@ -207,7 +210,10 @@
 					"storedProcedureName": "[dbo].[SP_update_watermark]",
 					"storedProcedureParameters": {
 						"TabName": {
-							"value": "PaymentDetails",
+							"value": {
+								"value": "@variables('SQL_Table')",
+								"type": "Expression"
+							},
 							"type": "String"
 						},
 						"LastModifiedDate": {
@@ -371,7 +377,10 @@
 							"type": "String"
 						},
 						"TableName": {
-							"value": "PaymentDetails",
+							"value": {
+								"value": "@variables('SQL_Table')",
+								"type": "Expression"
+							},
 							"type": "String"
 						},
 						"D_ColName": {
@@ -415,6 +424,10 @@
 			},
 			"d_enddate": {
 				"type": "String"
+			},
+			"SQL_Table": {
+				"type": "String",
+				"defaultValue": "PaymentDetails"
 			}
 		},
 		"folder": {
