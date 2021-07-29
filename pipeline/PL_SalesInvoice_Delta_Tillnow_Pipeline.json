@@ -1,5 +1,5 @@
 {
-	"name": "SalesInvoice_Delta_Tillnow_Pipeline",
+	"name": "PL_SalesInvoice_Delta_Tillnow_Pipeline",
 	"properties": {
 		"activities": [
 			{
