@@ -1,5 +1,5 @@
 {
-	"name": "test1",
+	"name": "PL_PaymentDetails_DELTA_oData_SQL",
 	"properties": {
 		"activities": [
 			{
@@ -283,6 +283,9 @@
 				"type": "Boolean",
 				"defaultValue": false
 			}
+		},
+		"folder": {
+			"name": "QA/PaymentDetails"
 		},
 		"annotations": []
 	}
