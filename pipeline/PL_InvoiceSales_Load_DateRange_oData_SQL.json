@@ -207,7 +207,7 @@
 					"storedProcedureName": "[dbo].[SP_update_watermark]",
 					"storedProcedureParameters": {
 						"TabName": {
-							"value": "PaymentDetails",
+							"value": "InvoiceSales",
 							"type": "String"
 						},
 						"LastModifiedDate": {
