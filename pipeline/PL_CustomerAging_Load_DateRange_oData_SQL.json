@@ -384,7 +384,7 @@
 							"type": "String"
 						},
 						"D_ColName": {
-							"value": "Invoicecrdate",
+							"value": "Invoicedate",
 							"type": "String"
 						}
 					}
