@@ -5,10 +5,22 @@
 		"factoryName": {
 			"value": "CFL-datafactory-QA01"
 		},
-		"LS_AzureDataLakeStorage_accountKey": {
+		"LS_SapHana_connectionString": {
 			"value": ""
 		},
 		"LS_AzureSqlDatabase_connectionString": {
+			"value": ""
+		},
+		"OData_SAP_HANA_password": {
+			"value": ""
+		},
+		"LS_AzureDataLakeStorage_accountKey": {
+			"value": ""
+		},
+		"LS_SapHana_QA_connectionString": {
+			"value": ""
+		},
+		"oData_SAP_HANA_QA_password": {
 			"value": ""
 		},
 		"LS_SAP_oData_InvoiceSales_password": {
@@ -17,20 +29,20 @@
 		"LS_SAP_oData_PaymentDetails_password": {
 			"value": ""
 		},
-		"LS_SapHana_connectionString": {
-			"value": ""
+		"OData_SAP_HANA_properties_typeProperties_url": {
+			"value": "http://172.26.150.72:8001/sap/opu/odata/sap/ZITRSDBILLCDS_SRV"
 		},
-		"LS_SapHana_QA_connectionString": {
-			"value": ""
-		},
-		"OData_SAP_HANA_password": {
-			"value": ""
-		},
-		"oData_SAP_HANA_QA_password": {
-			"value": ""
+		"OData_SAP_HANA_properties_typeProperties_userName": {
+			"value": "Carbynetech"
 		},
 		"LS_AzureDataLakeStorage_properties_typeProperties_url": {
 			"value": "https://straccdatalakeqa.dfs.core.windows.net"
+		},
+		"oData_SAP_HANA_QA_properties_typeProperties_url": {
+			"value": "http://172.26.2.228:8000/sap/opu/odata/sap/ZITRSDBILLCDS_SRV"
+		},
+		"oData_SAP_HANA_QA_properties_typeProperties_userName": {
+			"value": "carbynetech"
 		},
 		"LS_SAP_oData_InvoiceSales_properties_typeProperties_url": {
 			"value": "http://172.26.2.228:8000/sap/opu/odata/sap/ZITRSDBILLCDS_SRV"
@@ -42,18 +54,6 @@
 			"value": "http://172.26.2.228:8000/sap/opu/odata/sap/ZFIREP1430CDS_SRV"
 		},
 		"LS_SAP_oData_PaymentDetails_properties_typeProperties_userName": {
-			"value": "carbynetech"
-		},
-		"OData_SAP_HANA_properties_typeProperties_url": {
-			"value": "http://172.26.150.72:8001/sap/opu/odata/sap/ZITRSDBILLCDS_SRV"
-		},
-		"OData_SAP_HANA_properties_typeProperties_userName": {
-			"value": "Carbynetech"
-		},
-		"oData_SAP_HANA_QA_properties_typeProperties_url": {
-			"value": "http://172.26.2.228:8000/sap/opu/odata/sap/ZITRSDBILLCDS_SRV"
-		},
-		"oData_SAP_HANA_QA_properties_typeProperties_userName": {
 			"value": "carbynetech"
 		}
 	}
