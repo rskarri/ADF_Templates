@@ -74,22 +74,6 @@
 		"oData_SAP_HANA_QA_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "carbynetech"
-		},
-		"testDyanamic_Ravi_properties_testDynamicPerameter_parameters_Name": {
-			"type": "string",
-			"defaultValue": "Ravi"
-		},
-		"testDyanamic_Ravi_properties_testDynamicPerameter_parameters_Last Name": {
-			"type": "string",
-			"defaultValue": "Karri"
-		},
-		"trigger_chainmayi_properties_testDynamicPerameter_parameters_Name": {
-			"type": "string",
-			"defaultValue": "chianmayi"
-		},
-		"trigger_chainmayi_properties_testDynamicPerameter_parameters_Last Name": {
-			"type": "string",
-			"defaultValue": "karri"
 		}
 	},
 	"variables": {
@@ -2098,72 +2082,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/testDyanamic_Ravi')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "testDynamicPerameter",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"Name": "[parameters('testDyanamic_Ravi_properties_testDynamicPerameter_parameters_Name')]",
-							"Last Name": "[parameters('testDyanamic_Ravi_properties_testDynamicPerameter_parameters_Last Name')]"
-						}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Month",
-						"interval": 15,
-						"startTime": "2021-07-26T09:46:00Z",
-						"timeZone": "UTC"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/testDynamicPerameter')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/trigger_chainmayi')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "testDynamicPerameter",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"Name": "[parameters('trigger_chainmayi_properties_testDynamicPerameter_parameters_Name')]",
-							"Last Name": "[parameters('trigger_chainmayi_properties_testDynamicPerameter_parameters_Last Name')]"
-						}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Month",
-						"interval": 15,
-						"startTime": "2021-07-26T09:50:00Z",
-						"timeZone": "UTC"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/testDynamicPerameter')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/testFailure')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -2350,6 +2268,54 @@
 				"[concat(variables('factoryId'), '/datasets/DS_Copy_DelimitedText_datalake_copy1')]",
 				"[concat(variables('factoryId'), '/datasets/DS_AzureSqlTable_copy1')]",
 				"[concat(variables('factoryId'), '/datasets/DS_Copy_DelimitedText_datalake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_Dynamic_SAP_QA_oData')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "oData_SAP_HANA_QA",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"SourceTable": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "ODataResource",
+				"schema": [],
+				"typeProperties": {
+					"path": {
+						"value": "@dataset().SourceTable",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/oData_SAP_HANA_QA')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_ODataResource_hana')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OData_SAP_HANA",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "ODataResource",
+				"schema": [],
+				"typeProperties": {
+					"path": "SalesDataSet"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OData_SAP_HANA')]"
 			]
 		}
 	]

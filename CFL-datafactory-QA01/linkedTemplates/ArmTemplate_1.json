@@ -13,50 +13,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/DS_Dynamic_SAP_QA_oData')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "oData_SAP_HANA_QA",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"SourceTable": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "ODataResource",
-				"schema": [],
-				"typeProperties": {
-					"path": {
-						"value": "@dataset().SourceTable",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_ODataResource_hana')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "OData_SAP_HANA",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "ODataResource",
-				"schema": [],
-				"typeProperties": {
-					"path": "SalesDataSet"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/DS_OData_SAP_HANA_QA')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -4898,8 +4854,394 @@
 				"annotations": [],
 				"lastPublishTime": "2021-07-28T09:59:32Z"
 			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SalesInvoice_Delta_PrevDay_Daily_Pipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Old Watermark Value",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "select DateValue  FROM [dbo].[WatermarkTable] where TableName='InvoiceSales'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "DS_AzureSqlTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Copy SalesInvoice odata to SQL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "previousDate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ODataSource",
+								"query": {
+									"value": "$filter=Invoicecrdate gt datetime'@{activity('Old Watermark Value').output.firstRow.DateValue}' and Invoicecrdate le datetime'@{variables('prevDate')}'",
+									"type": "Expression"
+								},
+								"httpRequestTimeout": "00:05:00"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert"
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "DS_OData_SAP_HANA_QA",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DS_AzureSqlTable_SalesInvoice",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "previousDate",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Old Watermark Value",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "prevDate",
+							"value": {
+								"value": "@concat(substring(utcnow(), 0, 11),'00:00:00')",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "updateWaterMark",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "New Watermark Time Value",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[SP_update_watermark]",
+							"storedProcedureParameters": {
+								"TabName": {
+									"value": "InvoiceSales",
+									"type": "String"
+								},
+								"LastModifiedDate": {
+									"value": {
+										"value": "@activity('New Watermark Date Value').output.firstRow.maxDate",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"LastModifiedtime": {
+									"value": {
+										"value": "@activity('New Watermark Time Value').output.firstRow.maxTime",
+										"type": "Expression"
+									},
+									"type": "Timespan"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "LS_AzureSqlDatabase",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "New Watermark Date Value",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Copy SalesInvoice odata to SQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "select MAX(Invoicecrdate ) as maxDate FROM [dbo].[InvoiceSales]",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "DS_AzureSqlTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "New Watermark Time Value",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "New Watermark Date Value",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "select MAX(Invoicecrtime) as maxTime FROM [dbo].[InvoiceSales] where Invoicecrdate= ( select MAX(Invoicecrdate ) FROM [dbo].[InvoiceSales])",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "DS_AzureSqlTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					}
+				],
+				"variables": {
+					"prevDate": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "QA"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-07-27T17:14:26Z"
+			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_Dynamic_SAP_QA_oData')]"
+				"[concat(variables('factoryId'), '/datasets/DS_OData_SAP_HANA_QA')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SalesInvoice_Delta_PrevDay_Daily_Pipeline_copy1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Old Watermark Value",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "select WatermarkValue  FROM [dbo].[WatermarkTable] where TableName='InvoiceSalesDataQA'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "DS_AzureSqlTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Copy SalesInvoice odata to SQL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "previousDate",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ODataSource",
+								"query": {
+									"value": "$filter=Invoicecrdate gt datetime'@{activity('Old Watermark Value').output.firstRow.WatermarkValue}' and Invoicecrdate lt datetime'@{variables('prevDate')}'",
+									"type": "Expression"
+								},
+								"httpRequestTimeout": "00:05:00"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "DS_OData_SAP_HANA_QA",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DS_AzureSqlTable_SalesInvoice2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "previousDate",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Old Watermark Value",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "prevDate",
+							"value": {
+								"value": "@concat(substring(utcnow(), 0, 11),'00:00:00')",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "New Watermark Value",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Copy SalesInvoice odata to SQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "  select MAX( CONCAT( CAST(Invoicecrdate as date),' ',(Invoicecrtime)) ) as maxValue FROM [dbo].[InvoiceSalesDataQA]",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "DS_AzureSqlTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					}
+				],
+				"variables": {
+					"prevDate": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "QA"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-07-26T09:26:37Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_OData_SAP_HANA_QA')]"
 			]
 		}
 	]

@@ -75,22 +75,6 @@
 			"type": "string",
 			"defaultValue": "carbynetech"
 		},
-		"testDyanamic_Ravi_properties_testDynamicPerameter_parameters_Name": {
-			"type": "string",
-			"defaultValue": "Ravi"
-		},
-		"testDyanamic_Ravi_properties_testDynamicPerameter_parameters_Last Name": {
-			"type": "string",
-			"defaultValue": "Karri"
-		},
-		"trigger_chainmayi_properties_testDynamicPerameter_parameters_Name": {
-			"type": "string",
-			"defaultValue": "chianmayi"
-		},
-		"trigger_chainmayi_properties_testDynamicPerameter_parameters_Last Name": {
-			"type": "string",
-			"defaultValue": "karri"
-		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -168,18 +152,6 @@
 					},
 					"oData_SAP_HANA_QA_properties_typeProperties_userName": {
 						"value": "[parameters('oData_SAP_HANA_QA_properties_typeProperties_userName')]"
-					},
-					"testDyanamic_Ravi_properties_testDynamicPerameter_parameters_Name": {
-						"value": "[parameters('testDyanamic_Ravi_properties_testDynamicPerameter_parameters_Name')]"
-					},
-					"testDyanamic_Ravi_properties_testDynamicPerameter_parameters_Last Name": {
-						"value": "[parameters('testDyanamic_Ravi_properties_testDynamicPerameter_parameters_Last Name')]"
-					},
-					"trigger_chainmayi_properties_testDynamicPerameter_parameters_Name": {
-						"value": "[parameters('trigger_chainmayi_properties_testDynamicPerameter_parameters_Name')]"
-					},
-					"trigger_chainmayi_properties_testDynamicPerameter_parameters_Last Name": {
-						"value": "[parameters('trigger_chainmayi_properties_testDynamicPerameter_parameters_Last Name')]"
 					}
 				}
 			},

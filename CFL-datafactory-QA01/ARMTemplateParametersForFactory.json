@@ -55,18 +55,6 @@
 		},
 		"oData_SAP_HANA_QA_properties_typeProperties_userName": {
 			"value": "carbynetech"
-		},
-		"testDyanamic_Ravi_properties_testDynamicPerameter_parameters_Name": {
-			"value": "Ravi"
-		},
-		"testDyanamic_Ravi_properties_testDynamicPerameter_parameters_Last Name": {
-			"value": "Karri"
-		},
-		"trigger_chainmayi_properties_testDynamicPerameter_parameters_Name": {
-			"value": "chianmayi"
-		},
-		"trigger_chainmayi_properties_testDynamicPerameter_parameters_Last Name": {
-			"value": "karri"
 		}
 	}
 }
