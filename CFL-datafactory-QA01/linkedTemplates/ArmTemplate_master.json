@@ -7,29 +7,13 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "CFL-datafactory-QA01"
 		},
-		"LS_SapHana_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LS_SapHana'"
-		},
-		"LS_AzureSqlDatabase_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LS_AzureSqlDatabase'"
-		},
-		"OData_SAP_HANA_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'OData_SAP_HANA'"
-		},
 		"LS_AzureDataLakeStorage_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_AzureDataLakeStorage'"
 		},
-		"LS_SapHana_QA_connectionString": {
+		"LS_AzureSqlDatabase_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LS_SapHana_QA'"
-		},
-		"oData_SAP_HANA_QA_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'oData_SAP_HANA_QA'"
+			"metadata": "Secure string for 'connectionString' of 'LS_AzureSqlDatabase'"
 		},
 		"LS_SAP_oData_InvoiceSales_password": {
 			"type": "secureString",
@@ -39,25 +23,25 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'LS_SAP_oData_PaymentDetails'"
 		},
-		"OData_SAP_HANA_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "http://172.26.150.72:8001/sap/opu/odata/sap/ZITRSDBILLCDS_SRV"
+		"LS_SapHana_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_SapHana'"
 		},
-		"OData_SAP_HANA_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "Carbynetech"
+		"LS_SapHana_QA_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_SapHana_QA'"
+		},
+		"OData_SAP_HANA_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'OData_SAP_HANA'"
+		},
+		"oData_SAP_HANA_QA_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'oData_SAP_HANA_QA'"
 		},
 		"LS_AzureDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://straccdatalakeqa.dfs.core.windows.net"
-		},
-		"oData_SAP_HANA_QA_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "http://172.26.2.228:8000/sap/opu/odata/sap/ZITRSDBILLCDS_SRV"
-		},
-		"oData_SAP_HANA_QA_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "carbynetech"
 		},
 		"LS_SAP_oData_InvoiceSales_properties_typeProperties_url": {
 			"type": "string",
@@ -72,6 +56,22 @@
 			"defaultValue": "http://172.26.2.228:8000/sap/opu/odata/sap/ZFIREP1430CDS_SRV"
 		},
 		"LS_SAP_oData_PaymentDetails_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "carbynetech"
+		},
+		"OData_SAP_HANA_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "http://172.26.150.72:8001/sap/opu/odata/sap/ZITRSDBILLCDS_SRV"
+		},
+		"OData_SAP_HANA_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "Carbynetech"
+		},
+		"oData_SAP_HANA_QA_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "http://172.26.2.228:8000/sap/opu/odata/sap/ZITRSDBILLCDS_SRV"
+		},
+		"oData_SAP_HANA_QA_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "carbynetech"
 		},
@@ -102,23 +102,11 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"LS_AzureSqlDatabase_connectionString": {
-						"value": "[parameters('LS_AzureSqlDatabase_connectionString')]"
-					},
 					"LS_AzureDataLakeStorage_accountKey": {
 						"value": "[parameters('LS_AzureDataLakeStorage_accountKey')]"
 					},
-					"LS_SapHana_connectionString": {
-						"value": "[parameters('LS_SapHana_connectionString')]"
-					},
-					"OData_SAP_HANA_password": {
-						"value": "[parameters('OData_SAP_HANA_password')]"
-					},
-					"LS_SapHana_QA_connectionString": {
-						"value": "[parameters('LS_SapHana_QA_connectionString')]"
-					},
-					"oData_SAP_HANA_QA_password": {
-						"value": "[parameters('oData_SAP_HANA_QA_password')]"
+					"LS_AzureSqlDatabase_connectionString": {
+						"value": "[parameters('LS_AzureSqlDatabase_connectionString')]"
 					},
 					"LS_SAP_oData_InvoiceSales_password": {
 						"value": "[parameters('LS_SAP_oData_InvoiceSales_password')]"
@@ -126,20 +114,20 @@
 					"LS_SAP_oData_PaymentDetails_password": {
 						"value": "[parameters('LS_SAP_oData_PaymentDetails_password')]"
 					},
+					"LS_SapHana_connectionString": {
+						"value": "[parameters('LS_SapHana_connectionString')]"
+					},
+					"LS_SapHana_QA_connectionString": {
+						"value": "[parameters('LS_SapHana_QA_connectionString')]"
+					},
+					"OData_SAP_HANA_password": {
+						"value": "[parameters('OData_SAP_HANA_password')]"
+					},
+					"oData_SAP_HANA_QA_password": {
+						"value": "[parameters('oData_SAP_HANA_QA_password')]"
+					},
 					"LS_AzureDataLakeStorage_properties_typeProperties_url": {
 						"value": "[parameters('LS_AzureDataLakeStorage_properties_typeProperties_url')]"
-					},
-					"OData_SAP_HANA_properties_typeProperties_url": {
-						"value": "[parameters('OData_SAP_HANA_properties_typeProperties_url')]"
-					},
-					"OData_SAP_HANA_properties_typeProperties_userName": {
-						"value": "[parameters('OData_SAP_HANA_properties_typeProperties_userName')]"
-					},
-					"oData_SAP_HANA_QA_properties_typeProperties_url": {
-						"value": "[parameters('oData_SAP_HANA_QA_properties_typeProperties_url')]"
-					},
-					"oData_SAP_HANA_QA_properties_typeProperties_userName": {
-						"value": "[parameters('oData_SAP_HANA_QA_properties_typeProperties_userName')]"
 					},
 					"LS_SAP_oData_InvoiceSales_properties_typeProperties_url": {
 						"value": "[parameters('LS_SAP_oData_InvoiceSales_properties_typeProperties_url')]"
@@ -152,6 +140,18 @@
 					},
 					"LS_SAP_oData_PaymentDetails_properties_typeProperties_userName": {
 						"value": "[parameters('LS_SAP_oData_PaymentDetails_properties_typeProperties_userName')]"
+					},
+					"OData_SAP_HANA_properties_typeProperties_url": {
+						"value": "[parameters('OData_SAP_HANA_properties_typeProperties_url')]"
+					},
+					"OData_SAP_HANA_properties_typeProperties_userName": {
+						"value": "[parameters('OData_SAP_HANA_properties_typeProperties_userName')]"
+					},
+					"oData_SAP_HANA_QA_properties_typeProperties_url": {
+						"value": "[parameters('oData_SAP_HANA_QA_properties_typeProperties_url')]"
+					},
+					"oData_SAP_HANA_QA_properties_typeProperties_userName": {
+						"value": "[parameters('oData_SAP_HANA_QA_properties_typeProperties_userName')]"
 					}
 				}
 			},

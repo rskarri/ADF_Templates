@@ -7,29 +7,13 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "CFL-datafactory-QA01"
 		},
-		"LS_AzureSqlDatabase_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LS_AzureSqlDatabase'"
-		},
 		"LS_AzureDataLakeStorage_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_AzureDataLakeStorage'"
 		},
-		"LS_SapHana_connectionString": {
+		"LS_AzureSqlDatabase_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LS_SapHana'"
-		},
-		"OData_SAP_HANA_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'OData_SAP_HANA'"
-		},
-		"LS_SapHana_QA_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LS_SapHana_QA'"
-		},
-		"oData_SAP_HANA_QA_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'oData_SAP_HANA_QA'"
+			"metadata": "Secure string for 'connectionString' of 'LS_AzureSqlDatabase'"
 		},
 		"LS_SAP_oData_InvoiceSales_password": {
 			"type": "secureString",
@@ -39,25 +23,25 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'LS_SAP_oData_PaymentDetails'"
 		},
+		"LS_SapHana_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_SapHana'"
+		},
+		"LS_SapHana_QA_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_SapHana_QA'"
+		},
+		"OData_SAP_HANA_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'OData_SAP_HANA'"
+		},
+		"oData_SAP_HANA_QA_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'oData_SAP_HANA_QA'"
+		},
 		"LS_AzureDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://straccdatalakeqa.dfs.core.windows.net"
-		},
-		"OData_SAP_HANA_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "http://172.26.150.72:8001/sap/opu/odata/sap/ZITRSDBILLCDS_SRV"
-		},
-		"OData_SAP_HANA_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "Carbynetech"
-		},
-		"oData_SAP_HANA_QA_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "http://172.26.2.228:8000/sap/opu/odata/sap/ZITRSDBILLCDS_SRV"
-		},
-		"oData_SAP_HANA_QA_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "carbynetech"
 		},
 		"LS_SAP_oData_InvoiceSales_properties_typeProperties_url": {
 			"type": "string",
@@ -74,22 +58,28 @@
 		"LS_SAP_oData_PaymentDetails_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "carbynetech"
+		},
+		"OData_SAP_HANA_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "http://172.26.150.72:8001/sap/opu/odata/sap/ZITRSDBILLCDS_SRV"
+		},
+		"OData_SAP_HANA_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "Carbynetech"
+		},
+		"oData_SAP_HANA_QA_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "http://172.26.2.228:8000/sap/opu/odata/sap/ZITRSDBILLCDS_SRV"
+		},
+		"oData_SAP_HANA_QA_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "carbynetech"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/integrationRuntime-SAP-HANA')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {}
-			},
-			"dependsOn": []
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/testDynamicPerameter')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -132,19 +122,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/LS_AzureSqlDatabase')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('LS_AzureSqlDatabase_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/LS_AzureDataLakeStorage')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -158,6 +135,29 @@
 						"value": "[parameters('LS_AzureDataLakeStorage_accountKey')]"
 					}
 				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_AzureSqlDatabase')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('LS_AzureSqlDatabase_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/integrationRuntime-SAP-HANA')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
 			},
 			"dependsOn": []
 		},
@@ -183,36 +183,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DS_Copy_DelimitedText_datalake')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_AzureDataLakeStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "Invoice_Sales.csv",
-						"folderPath": "InvoiceSales",
-						"fileSystem": "sapdata"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_AzureDataLakeStorage')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_AzureSqlTable_copy1')]",
+			"name": "[concat(parameters('factoryName'), '/DS_AzureSqlTable_Dynmamic')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -220,45 +191,831 @@
 					"referenceName": "LS_AzureSqlDatabase",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"SQLTableName": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "QA"
+				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "Billingdoc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Item",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Companycode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Salesorg",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Ewaybillno",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exportexinvno",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exportexinvdt",
+						"type": "date"
+					},
+					{
+						"name": "Accexchangerate",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 3
+					},
+					{
+						"name": "Netvalue",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 3
+					},
+					{
+						"name": "Doccurrency",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Loccuramt",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "Gstin",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Region",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Regionname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Regiondlvplant",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Customerrefdate",
+						"type": "date"
+					},
+					{
+						"name": "Grossvalue",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "Invoicedate",
+						"type": "date"
+					},
+					{
+						"name": "Invoicetime",
+						"type": "time",
+						"scale": 7
+					},
+					{
+						"name": "Changedon",
+						"type": "date"
+					},
+					{
+						"name": "Businessplace",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Plant",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Plantdesc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Billingtype",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Deldocno",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Deldocdate",
+						"type": "date"
+					},
+					{
+						"name": "Orderno",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Orderqunatity",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 0
+					},
+					{
+						"name": "Ordercreatedtime",
+						"type": "time",
+						"scale": 7
+					},
+					{
+						"name": "Requesteddeldate",
+						"type": "date"
+					},
+					{
+						"name": "Orderstatus",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Salesordertype",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Distchannel",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Division",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Customer",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Customername",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Customercountry",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Customercountrydesc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Materialpricegrp",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Materialpricegrpdesc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Material",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Materialdes",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Brand",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Brandname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Productgroup",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Productgrpdesc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Productheirarchy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Productheirarchydes",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Materialtype",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Materialgrp1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Materialgrp1des",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Materialgrp2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Materialgrp2des",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Materialgrp3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Materialgrp3des",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Materialgrp4",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Materialgrp4des",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Materialgrp5",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Materialgrp5des",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Pckmatgrp",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Pckmatgrpdes",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Salesgrp",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Salesgrpdes",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Salesofc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Salesofcdes",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Salesdistrict",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Salesdistrictname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Orderpono",
+						"type": "nvarchar"
+					},
+					{
+						"name": "City",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Crcontrolarea",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Uom",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Billoflanding",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Invoicecrdate",
+						"type": "date"
+					},
+					{
+						"name": "Invoicecrtime",
+						"type": "time",
+						"scale": 7
+					},
+					{
+						"name": "Invoicecruser",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Invservrenddate",
+						"type": "date"
+					},
+					{
+						"name": "Ordercreateddate",
+						"type": "date"
+					},
+					{
+						"name": "Ordercreateduser",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Oderpricingdate",
+						"type": "date"
+					},
+					{
+						"name": "Delcrdate",
+						"type": "date"
+					},
+					{
+						"name": "Delcrname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Delgoodsissue",
+						"type": "date"
+					},
+					{
+						"name": "Wholesaleid",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Retailid",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Meansoftrans",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Meansoftransdesc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Vehicleno",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Plannedgi",
+						"type": "date"
+					},
+					{
+						"name": "Shiptoparty",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Shiptopartydesc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exchangerate",
+						"type": "decimal",
+						"precision": 23,
+						"scale": 2
+					},
+					{
+						"name": "Orderreason",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Shippingcountrycode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Shippingcountrydesc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Shippingcitycode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Countycode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Countydesc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Citycode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Citydesc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Customergrp",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Customergrpdesc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Custpricinggrp",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Custpricinggrpdesc",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Reference",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Referencebillno",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Billedqtyinsku",
+						"type": "decimal",
+						"precision": 24,
+						"scale": 2
+					},
+					{
+						"name": "Leagalstatus",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Stategsttax",
+						"type": "decimal",
+						"precision": 25,
+						"scale": 2
+					},
+					{
+						"name": "Centralgsttax",
+						"type": "decimal",
+						"precision": 25,
+						"scale": 2
+					},
+					{
+						"name": "Integrgsttax",
+						"type": "decimal",
+						"precision": 25,
+						"scale": 2
+					},
+					{
+						"name": "Gstvalueininr",
+						"type": "decimal",
+						"precision": 25,
+						"scale": 2
+					},
+					{
+						"name": "Netvalueinctaxininr",
+						"type": "decimal",
+						"precision": 25,
+						"scale": 2
+					},
+					{
+						"name": "Gstvalue",
+						"type": "decimal",
+						"precision": 25,
+						"scale": 2
+					},
+					{
+						"name": "Netvalueinctax",
+						"type": "decimal",
+						"precision": 25,
+						"scale": 2
+					},
+					{
+						"name": "Taxcode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Batch",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Incoterms",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Incotermname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Payterms",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Paytremsdes",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Usageindicator",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Pricelisttype",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Pricelistname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Taxtype",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Pricingdate",
+						"type": "date"
+					},
+					{
+						"name": "Locationcode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Customerclass",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Difference",
+						"type": "decimal",
+						"precision": 23,
+						"scale": 2
+					},
+					{
+						"name": "Businessarea",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Profitcenter",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Canceledstatus",
+						"type": "bit"
+					},
+					{
+						"name": "Taxcollectedsrc",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Specialdiscount",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Quantitydiscount",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Tradediscount",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Basicprice",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Basicpricedif",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Mrpprice",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Igsttax",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Freightdiscount",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Freightheader",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Freightdesc",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Adhocdealermargin",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Dealermargin",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Earlypayrebate",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Cashdiscountmanual",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Others",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Exportcommission",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Airfreight",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Pyqtydiscount",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Pyfreightdiscount",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Pyearlypayrebate",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Stategstininr",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Integratedgstininr",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Centralgstininr",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Stategst",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Integratedgst",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Centralgst",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Roundoff",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Sub",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 2
+					},
+					{
+						"name": "Basicmaterial",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Duedate",
+						"type": "date"
+					},
+					{
+						"name": "Portcode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Shippingbillno",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Shippingbilldt",
+						"type": "date"
+					},
+					{
+						"name": "Fobvalue",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "Dispatchid",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Dispatchdt",
+						"type": "date"
+					},
+					{
+						"name": "Pdcchequeno",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Pdcchequedate",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Pdcchequeval",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 2
+					},
+					{
+						"name": "Pdcbankname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Controlcode",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Einvirn",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Shippingcondition",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Containerid",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Lrnumber",
+						"type": "nvarchar"
+					}
+				],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "Employee"
+					"table": {
+						"value": "@dataset().SQLTableName",
+						"type": "Expression"
+					}
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/LS_AzureSqlDatabase')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_Copy_DelimitedText_datalake_copy1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_AzureDataLakeStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "fail.csv",
-						"folderPath": "input-data",
-						"fileSystem": "datafactory-data"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_AzureDataLakeStorage')]"
 			]
 		},
 		{
@@ -1108,7 +1865,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DS_AzureSqlTable_Dynmamic')]",
+			"name": "[concat(parameters('factoryName'), '/DS_AzureSqlTable_copy1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1116,827 +1873,12 @@
 					"referenceName": "LS_AzureSqlDatabase",
 					"type": "LinkedServiceReference"
 				},
-				"parameters": {
-					"SQLTableName": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "QA"
-				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Billingdoc",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Item",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Companycode",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Salesorg",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Ewaybillno",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Exportexinvno",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Exportexinvdt",
-						"type": "date"
-					},
-					{
-						"name": "Accexchangerate",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 3
-					},
-					{
-						"name": "Netvalue",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 3
-					},
-					{
-						"name": "Doccurrency",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Loccuramt",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 2
-					},
-					{
-						"name": "Gstin",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Region",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Regionname",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Regiondlvplant",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Customerrefdate",
-						"type": "date"
-					},
-					{
-						"name": "Grossvalue",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 2
-					},
-					{
-						"name": "Invoicedate",
-						"type": "date"
-					},
-					{
-						"name": "Invoicetime",
-						"type": "time",
-						"scale": 7
-					},
-					{
-						"name": "Changedon",
-						"type": "date"
-					},
-					{
-						"name": "Businessplace",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Plant",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Plantdesc",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Billingtype",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Deldocno",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Deldocdate",
-						"type": "date"
-					},
-					{
-						"name": "Orderno",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Orderqunatity",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 0
-					},
-					{
-						"name": "Ordercreatedtime",
-						"type": "time",
-						"scale": 7
-					},
-					{
-						"name": "Requesteddeldate",
-						"type": "date"
-					},
-					{
-						"name": "Orderstatus",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Salesordertype",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Distchannel",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Division",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Customer",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Customername",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Customercountry",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Customercountrydesc",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Materialpricegrp",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Materialpricegrpdesc",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Material",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Materialdes",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Brand",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Brandname",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Productgroup",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Productgrpdesc",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Productheirarchy",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Productheirarchydes",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Materialtype",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Materialgrp1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Materialgrp1des",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Materialgrp2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Materialgrp2des",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Materialgrp3",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Materialgrp3des",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Materialgrp4",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Materialgrp4des",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Materialgrp5",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Materialgrp5des",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Pckmatgrp",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Pckmatgrpdes",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Salesgrp",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Salesgrpdes",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Salesofc",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Salesofcdes",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Salesdistrict",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Salesdistrictname",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Orderpono",
-						"type": "nvarchar"
-					},
-					{
-						"name": "City",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Crcontrolarea",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Uom",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Billoflanding",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Invoicecrdate",
-						"type": "date"
-					},
-					{
-						"name": "Invoicecrtime",
-						"type": "time",
-						"scale": 7
-					},
-					{
-						"name": "Invoicecruser",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Invservrenddate",
-						"type": "date"
-					},
-					{
-						"name": "Ordercreateddate",
-						"type": "date"
-					},
-					{
-						"name": "Ordercreateduser",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Oderpricingdate",
-						"type": "date"
-					},
-					{
-						"name": "Delcrdate",
-						"type": "date"
-					},
-					{
-						"name": "Delcrname",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Delgoodsissue",
-						"type": "date"
-					},
-					{
-						"name": "Wholesaleid",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Retailid",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Meansoftrans",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Meansoftransdesc",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Vehicleno",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Plannedgi",
-						"type": "date"
-					},
-					{
-						"name": "Shiptoparty",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Shiptopartydesc",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Exchangerate",
-						"type": "decimal",
-						"precision": 23,
-						"scale": 2
-					},
-					{
-						"name": "Orderreason",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Shippingcountrycode",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Shippingcountrydesc",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Shippingcitycode",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Countycode",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Countydesc",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Citycode",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Citydesc",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Customergrp",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Customergrpdesc",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Custpricinggrp",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Custpricinggrpdesc",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Reference",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Referencebillno",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Billedqtyinsku",
-						"type": "decimal",
-						"precision": 24,
-						"scale": 2
-					},
-					{
-						"name": "Leagalstatus",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Stategsttax",
-						"type": "decimal",
-						"precision": 25,
-						"scale": 2
-					},
-					{
-						"name": "Centralgsttax",
-						"type": "decimal",
-						"precision": 25,
-						"scale": 2
-					},
-					{
-						"name": "Integrgsttax",
-						"type": "decimal",
-						"precision": 25,
-						"scale": 2
-					},
-					{
-						"name": "Gstvalueininr",
-						"type": "decimal",
-						"precision": 25,
-						"scale": 2
-					},
-					{
-						"name": "Netvalueinctaxininr",
-						"type": "decimal",
-						"precision": 25,
-						"scale": 2
-					},
-					{
-						"name": "Gstvalue",
-						"type": "decimal",
-						"precision": 25,
-						"scale": 2
-					},
-					{
-						"name": "Netvalueinctax",
-						"type": "decimal",
-						"precision": 25,
-						"scale": 2
-					},
-					{
-						"name": "Taxcode",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Batch",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Incoterms",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Incotermname",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Payterms",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Paytremsdes",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Usageindicator",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Pricelisttype",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Pricelistname",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Taxtype",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Pricingdate",
-						"type": "date"
-					},
-					{
-						"name": "Locationcode",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Customerclass",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Difference",
-						"type": "decimal",
-						"precision": 23,
-						"scale": 2
-					},
-					{
-						"name": "Businessarea",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Profitcenter",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Canceledstatus",
-						"type": "bit"
-					},
-					{
-						"name": "Taxcollectedsrc",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Specialdiscount",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Quantitydiscount",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Tradediscount",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Basicprice",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Basicpricedif",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Mrpprice",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Igsttax",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Freightdiscount",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Freightheader",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Freightdesc",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Adhocdealermargin",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Dealermargin",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Earlypayrebate",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Cashdiscountmanual",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Others",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Exportcommission",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Airfreight",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Pyqtydiscount",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Pyfreightdiscount",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Pyearlypayrebate",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Stategstininr",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Integratedgstininr",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Centralgstininr",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Stategst",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Integratedgst",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Centralgst",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Roundoff",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Sub",
-						"type": "decimal",
-						"precision": 38,
-						"scale": 2
-					},
-					{
-						"name": "Basicmaterial",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Duedate",
-						"type": "date"
-					},
-					{
-						"name": "Portcode",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Shippingbillno",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Shippingbilldt",
-						"type": "date"
-					},
-					{
-						"name": "Fobvalue",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 2
-					},
-					{
-						"name": "Dispatchid",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Dispatchdt",
-						"type": "date"
-					},
-					{
-						"name": "Pdcchequeno",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Pdcchequedate",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Pdcchequeval",
-						"type": "decimal",
-						"precision": 18,
-						"scale": 2
-					},
-					{
-						"name": "Pdcbankname",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Controlcode",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Einvirn",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Shippingcondition",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Containerid",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Lrnumber",
-						"type": "nvarchar"
-					}
-				],
+				"schema": [],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": {
-						"value": "@dataset().SQLTableName",
-						"type": "Expression"
-					}
+					"table": "Employee"
 				}
 			},
 			"dependsOn": [
@@ -1944,91 +1886,61 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/LS_SapHana')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"name": "[concat(parameters('factoryName'), '/DS_Copy_DelimitedText_datalake')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"annotations": [],
-				"type": "SapHana",
-				"typeProperties": {
-					"connectionString": "[parameters('LS_SapHana_connectionString')]"
+				"linkedServiceName": {
+					"referenceName": "LS_AzureDataLakeStorage",
+					"type": "LinkedServiceReference"
 				},
-				"connectVia": {
-					"referenceName": "integrationRuntime-SAP-HANA",
-					"type": "IntegrationRuntimeReference"
-				}
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Invoice_Sales.csv",
+						"folderPath": "InvoiceSales",
+						"fileSystem": "sapdata"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime-SAP-HANA')]"
+				"[concat(variables('factoryId'), '/linkedServices/LS_AzureDataLakeStorage')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/OData_SAP_HANA')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"name": "[concat(parameters('factoryName'), '/DS_Copy_DelimitedText_datalake_copy1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"annotations": [],
-				"type": "OData",
-				"typeProperties": {
-					"url": "[parameters('OData_SAP_HANA_properties_typeProperties_url')]",
-					"authenticationType": "Basic",
-					"userName": "[parameters('OData_SAP_HANA_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('OData_SAP_HANA_password')]"
-					}
+				"linkedServiceName": {
+					"referenceName": "LS_AzureDataLakeStorage",
+					"type": "LinkedServiceReference"
 				},
-				"connectVia": {
-					"referenceName": "integrationRuntime-SAP-HANA",
-					"type": "IntegrationRuntimeReference"
-				}
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "fail.csv",
+						"folderPath": "input-data",
+						"fileSystem": "datafactory-data"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime-SAP-HANA')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_SapHana_QA')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SapHana",
-				"typeProperties": {
-					"connectionString": "[parameters('LS_SapHana_QA_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "integrationRuntime-SAP-HANA",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime-SAP-HANA')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/oData_SAP_HANA_QA')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "OData",
-				"typeProperties": {
-					"url": "[parameters('oData_SAP_HANA_QA_properties_typeProperties_url')]",
-					"authenticationType": "Basic",
-					"userName": "[parameters('oData_SAP_HANA_QA_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('oData_SAP_HANA_QA_password')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "integrationRuntime-SAP-HANA",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime-SAP-HANA')]"
+				"[concat(variables('factoryId'), '/linkedServices/LS_AzureDataLakeStorage')]"
 			]
 		},
 		{
@@ -2082,6 +1994,311 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/LS_SapHana')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SapHana",
+				"typeProperties": {
+					"connectionString": "[parameters('LS_SapHana_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime-SAP-HANA",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime-SAP-HANA')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_SapHana_QA')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SapHana",
+				"typeProperties": {
+					"connectionString": "[parameters('LS_SapHana_QA_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime-SAP-HANA",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime-SAP-HANA')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OData_SAP_HANA')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "OData",
+				"typeProperties": {
+					"url": "[parameters('OData_SAP_HANA_properties_typeProperties_url')]",
+					"authenticationType": "Basic",
+					"userName": "[parameters('OData_SAP_HANA_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('OData_SAP_HANA_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime-SAP-HANA",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime-SAP-HANA')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/oData_SAP_HANA_QA')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "OData",
+				"typeProperties": {
+					"url": "[parameters('oData_SAP_HANA_QA_properties_typeProperties_url')]",
+					"authenticationType": "Basic",
+					"userName": "[parameters('oData_SAP_HANA_QA_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('oData_SAP_HANA_QA_password')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime-SAP-HANA",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime-SAP-HANA')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/testFailure')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy data2",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DS_Copy_DelimitedText_datalake_copy1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DS_AzureSqlTable_copy1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy data2",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DS_Copy_DelimitedText_datalake",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DS_AzureSqlTable_copy1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy data2_copy1",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy data1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DS_Copy_DelimitedText_datalake",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DS_AzureSqlTable_copy1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": [],
+				"lastPublishTime": "2021-07-25T16:33:26Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_Copy_DelimitedText_datalake_copy1')]",
+				"[concat(variables('factoryId'), '/datasets/DS_AzureSqlTable_copy1')]",
+				"[concat(variables('factoryId'), '/datasets/DS_Copy_DelimitedText_datalake')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_Dynamic_SAP_QA_oData')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "oData_SAP_HANA_QA",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"SourceTable": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "ODataResource",
+				"schema": [],
+				"typeProperties": {
+					"path": {
+						"value": "@dataset().SourceTable",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/oData_SAP_HANA_QA')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_ODataResource_hana')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2099,53 +2316,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/OData_SAP_HANA')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_SAPHANA_QA')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_SapHana_QA",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"SchemaName": {
-						"type": "string"
-					},
-					"TableName": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "SapHanaTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "SAPHANADB",
-					"table": "ZSDBILLCDS"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_SapHana_QA')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_SapHanaTable_DEV')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_SapHana",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SapHanaTable",
-				"schema": [],
-				"typeProperties": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_SapHana')]"
 			]
 		}
 	]
