@@ -1,5 +1,5 @@
 {
-	"name": "PL_InvoiceSales_Initial_Load_DateRange_oData_SQL",
+	"name": "PL_InvoiceSales_Load_DateRange_oData_SQL",
 	"properties": {
 		"activities": [
 			{
