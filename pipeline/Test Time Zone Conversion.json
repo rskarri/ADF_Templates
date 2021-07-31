@@ -54,6 +54,26 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "Set variable3",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Set variable2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "time4",
+					"value": {
+						"value": "@concat(substring(subtractFromTime( convertTimeZone(utcnow(),'UTC','India Standard Time'), 1, 'Day'),0,9),'T00:00:00')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"variables": {
@@ -64,6 +84,9 @@
 				"type": "String"
 			},
 			"time3": {
+				"type": "String"
+			},
+			"time4": {
 				"type": "String"
 			}
 		},
