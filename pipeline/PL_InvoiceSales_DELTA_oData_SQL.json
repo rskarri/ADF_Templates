@@ -10,7 +10,7 @@
 				"typeProperties": {
 					"variableName": "StartDate",
 					"value": {
-						"value": "@concat(substring(subtractFromTime( convertTimeZone(utcnow(),'UTC','India Standard Time'), 1, 'Day'),0,9),'T00:00:00')",
+						"value": "@subtractFromTime( convertTimeZone(utcnow(),'UTC','India Standard Time'), 1, 'Day')",
 						"type": "Expression"
 					}
 				}
