@@ -30,7 +30,7 @@
 				"typeProperties": {
 					"variableName": "zStartDate",
 					"value": {
-						"value": "@substring(variables('StartDate'),0,18)",
+						"value": "@substring(concat(substring(variables('StartDate'),0,10),'T00:00:00'),0,18)",
 						"type": "Expression"
 					}
 				}
