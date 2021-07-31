@@ -1,0 +1,72 @@
+{
+	"name": "Test Time Zone Conversion",
+	"properties": {
+		"activities": [
+			{
+				"name": "Set startDate",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "time1",
+					"value": {
+						"value": "@concat(substring(getPastTime(1, 'Day'),0,10),'T00:00:00')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Set startDate",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "time2",
+					"value": {
+						"value": "@getPastTime(1, 'Day')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Set variable2",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Set variable1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "time3",
+					"value": {
+						"value": "@convertTimeZone(utcnow(),'UTC','India Standard Time')",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"time1": {
+				"type": "String"
+			},
+			"time2": {
+				"type": "String"
+			},
+			"time3": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
