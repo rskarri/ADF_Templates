@@ -1,0 +1,19 @@
+{
+	"name": "DS_SAP_oData_Aging",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SAP_OData_Aging",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "QA/Aging"
+		},
+		"annotations": [],
+		"type": "ODataResource",
+		"schema": [],
+		"typeProperties": {
+			"path": "ZFIREP1330_CDS"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
