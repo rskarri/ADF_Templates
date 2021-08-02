@@ -12,10 +12,7 @@
 		"type": "ODataResource",
 		"schema": [],
 		"typeProperties": {
-			"path": {
-				"value": "ZFIREP1330_CDS",
-				"type": "Expression"
-			}
+			"path": "ZFIREP1330_CDS"
 		}
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"
