@@ -18,7 +18,7 @@
 					"source": {
 						"type": "ODataSource",
 						"query": {
-							"value": "ZFIREP1330_CDSSet",
+							"value": "/Set",
 							"type": "Expression"
 						},
 						"httpRequestTimeout": "00:30:00"
