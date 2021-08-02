@@ -17,7 +17,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "ODataSource",
-						"query": "/Set",
+						"query": {
+							"value": "(p_budat='2019-11-02T00:00:00')/Set",
+							"type": "Expression"
+						},
 						"httpRequestTimeout": "00:30:00"
 					},
 					"sink": {
