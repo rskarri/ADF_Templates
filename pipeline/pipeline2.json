@@ -18,7 +18,7 @@
 					"source": {
 						"type": "ODataSource",
 						"query": {
-							"value": "/Set",
+							"value": "ZFIREP1330_CDS(p_budat=datetime'2019-11-02T00:00:00')/Set",
 							"type": "Expression"
 						},
 						"httpRequestTimeout": "00:30:00"
