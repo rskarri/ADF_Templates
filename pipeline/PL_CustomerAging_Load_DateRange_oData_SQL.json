@@ -98,7 +98,7 @@
 								},
 								"ifFalseActivities": [
 									{
-										"name": "Copy PaymentDetails to SQL",
+										"name": "Copy customerAging to SQL",
 										"type": "Copy",
 										"dependsOn": [],
 										"policy": {
@@ -112,10 +112,6 @@
 										"typeProperties": {
 											"source": {
 												"type": "ODataSource",
-												"query": {
-													"value": "$filter=Invoicedate eq datetime'@{variables('fromDateRZ')}'",
-													"type": "Expression"
-												},
 												"httpRequestTimeout": "00:30:00"
 											},
 											"sink": {
@@ -128,7 +124,7 @@
 										},
 										"inputs": [
 											{
-												"referenceName": "DS_SAP_oData_InvoiceSales",
+												"referenceName": "DS_SAP_oData_Aging",
 												"type": "DatasetReference"
 											}
 										],
@@ -192,7 +188,7 @@
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
-						"activity": "New Watermark Time Value",
+						"activity": "New Watermark Date Value",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -224,10 +220,7 @@
 							"type": "Datetime"
 						},
 						"LastModifiedtime": {
-							"value": {
-								"value": "@activity('New Watermark Time Value').output.firstRow.maxTime",
-								"type": "Expression"
-							},
+							"value": "00:00:00",
 							"type": "Timespan"
 						}
 					}
@@ -260,42 +253,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select MAX(Invoicecrdate ) as maxDate FROM [dbo].[InvoiceSales]",
-							"type": "Expression"
-						},
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"dataset": {
-						"referenceName": "DS_AzureSqlTable",
-						"type": "DatasetReference"
-					}
-				}
-			},
-			{
-				"name": "New Watermark Time Value",
-				"type": "Lookup",
-				"dependsOn": [
-					{
-						"activity": "New Watermark Date Value",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderQuery": {
-							"value": "select MAX(Invoicecrtime) as maxTime FROM [dbo].[InvoiceSales] where Invoicecrdate= ( select MAX(Invoicecrdate ) FROM [dbo].[InvoiceSales])",
+							"value": "select MAX(Asondate ) as maxDate FROM [dbo].[CustomerAging]",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -384,7 +342,7 @@
 							"type": "String"
 						},
 						"D_ColName": {
-							"value": "Invoicedate",
+							"value": "Mnth_yr",
 							"type": "String"
 						}
 					}
@@ -393,33 +351,6 @@
 					"referenceName": "LS_AzureSqlDatabase",
 					"type": "LinkedServiceReference"
 				}
-			},
-			{
-				"name": "Copy data1",
-				"type": "Copy",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "ODataSource",
-						"query": "(p_budat=datetime'2019-11-02T00:00:00')/Set",
-						"httpRequestTimeout": "00:05:00"
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "DS_SAP_oData_Aging",
-						"type": "DatasetReference"
-					}
-				]
 			}
 		],
 		"parameters": {
