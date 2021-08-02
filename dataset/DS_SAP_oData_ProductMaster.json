@@ -1,0 +1,19 @@
+{
+	"name": "DS_SAP_oData_ProductMaster",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SAP_OData_ProductMaster",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "QA/ProductMaster"
+		},
+		"annotations": [],
+		"type": "ODataResource",
+		"schema": [],
+		"typeProperties": {
+			"path": "zmmrep2180_cds"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
