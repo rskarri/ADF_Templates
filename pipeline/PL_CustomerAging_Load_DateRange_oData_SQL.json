@@ -181,7 +181,21 @@
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
-					"enableSkipIncompatibleRow": false,
+					"enableSkipIncompatibleRow": true,
+					"logSettings": {
+						"enableCopyActivityLog": true,
+						"copyActivityLogSettings": {
+							"logLevel": "Warning",
+							"enableReliableLogging": false
+						},
+						"logLocationSettings": {
+							"linkedServiceName": {
+								"referenceName": "LS_AzureDataLakeStorage",
+								"type": "LinkedServiceReference"
+							},
+							"path": "datafactory-data"
+						}
+					},
 					"translator": {
 						"type": "TabularTranslator",
 						"mappings": [
