@@ -5,6 +5,11 @@
 			"referenceName": "LS_SAP_OData_Aging",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"D_AsoDate": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "QA/CustomerAging"
 		},
