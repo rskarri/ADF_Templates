@@ -128,7 +128,7 @@
 										},
 										"inputs": [
 											{
-												"referenceName": "DS_SAP_oData_InvoiceSales",
+												"referenceName": "DS_SAP_oData_CustomerMaster",
 												"type": "DatasetReference"
 											}
 										],
