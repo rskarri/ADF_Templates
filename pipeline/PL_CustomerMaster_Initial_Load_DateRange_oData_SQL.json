@@ -98,7 +98,7 @@
 								},
 								"ifFalseActivities": [
 									{
-										"name": "Copy InvoiceSales to SQL",
+										"name": "Copy CustomerMaster to SQL",
 										"type": "Copy",
 										"dependsOn": [],
 										"policy": {
@@ -113,7 +113,7 @@
 											"source": {
 												"type": "ODataSource",
 												"query": {
-													"value": "$filter=Invoicecrdate eq datetime'@{variables('fromDateRZ')}'",
+													"value": "$filter=CreAt eq datetime'@{variables('fromDateRZ')}'",
 													"type": "Expression"
 												},
 												"httpRequestTimeout": "00:30:00"
@@ -260,7 +260,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select MAX(Invoicecrdate ) as maxDate FROM [dbo].[InvoiceSales]",
+							"value": "select MAX(Creat ) as maxDate FROM [dbo].[InvoiceSales]",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -295,7 +295,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select MAX(Invoicecrtime) as maxTime FROM [dbo].[InvoiceSales] where Invoicecrdate= ( select MAX(Invoicecrdate ) FROM [dbo].[InvoiceSales])",
+							"value": "select MAX(Creat) as maxTime FROM [dbo].[CustomerMaster] where Creat= ( select MAX(Creat ) FROM [dbo].[CustomerMaster])",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -384,7 +384,7 @@
 							"type": "String"
 						},
 						"D_ColName": {
-							"value": "Invoicecrdate",
+							"value": "CreAt",
 							"type": "String"
 						}
 					}
