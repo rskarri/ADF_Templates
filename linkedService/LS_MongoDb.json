@@ -1,0 +1,17 @@
+{
+	"name": "LS_MongoDb",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "MongoDbV2",
+		"typeProperties": {
+			"connectionString": "mongodb://admin:@172.26.74.76",
+			"database": "mfms",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIyMTY5YWU4NC1hZDEyLTQ0NDgtODJkMC04NjRiNDNhYTNlYjciLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime-SAP-HANA",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
