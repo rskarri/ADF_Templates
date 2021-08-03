@@ -124,7 +124,21 @@
 												"disableMetricsCollection": false
 											},
 											"enableStaging": false,
+											"parallelCopies": 5,
 											"enableSkipIncompatibleRow": true,
+											"logSettings": {
+												"enableCopyActivityLog": true,
+												"copyActivityLogSettings": {
+													"logLevel": "Warning",
+													"enableReliableLogging": false
+												},
+												"logLocationSettings": {
+													"linkedServiceName": {
+														"referenceName": "LS_AzureDataLakeStorage",
+														"type": "LinkedServiceReference"
+													}
+												}
+											},
 											"translator": {
 												"type": "TabularTranslator",
 												"mappings": [
