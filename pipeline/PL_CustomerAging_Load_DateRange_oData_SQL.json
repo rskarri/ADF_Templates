@@ -142,7 +142,7 @@
 						},
 						"D_ColName": {
 							"value": "Asondate",
-							"type": "String"
+							"type": "Datetime"
 						}
 					}
 				},
