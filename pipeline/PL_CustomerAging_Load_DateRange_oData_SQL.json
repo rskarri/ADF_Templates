@@ -431,7 +431,13 @@
 				"inputs": [
 					{
 						"referenceName": "DS_SAP_oData_Aging",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"D_AsoDate": {
+								"value": "@pipeline().parameters.P_TillDate",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"outputs": [
