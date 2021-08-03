@@ -181,7 +181,252 @@
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
-					"enableSkipIncompatibleRow": true
+					"enableSkipIncompatibleRow": true,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Customer",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Customer",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CreditControlArea",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Creditcontrolarea",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "AsOnDate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "Asondate",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "Mnth_yr",
+									"type": "String"
+								},
+								"sink": {
+									"name": "MnthYr",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "CustomerName",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Customername",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "NOTNODAmt",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Notnodamt",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "NearOfDueAmt",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Nearofdueamt",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "Zero_30Amt",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Zero30amt",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ThirtyOne_60Amt",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Thirtyone60amt",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "SixtyOne_90Amt",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Sixtyone90amt",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "NintyOne_120Amt",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Nintyone120amt",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "OneTwentyOne_180Amt",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Onetwentyone180amt",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "OneEightyOne_270Amt",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Oneeightyone270amt",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "TwoSeventyOne_365Amt",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Twoseventyone365amt",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "ThreeSixtySix_730Amt",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Threesixtysix730amt",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "SevenThirtyOne_9999Amt",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Seventhirtyone9999amt",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "TotalDue",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Totaldue",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "Unj_Crd",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "UnjCrd",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "NetOS",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Netos",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "SecurityDeposit",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Securitydeposit",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "TradeDeposit",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Tradedeposit",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "CreditLimit",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Creditlimit",
+									"type": "Decimal"
+								}
+							},
+							{
+								"source": {
+									"name": "Status",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Status",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Location",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Location",
+									"type": "String"
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
