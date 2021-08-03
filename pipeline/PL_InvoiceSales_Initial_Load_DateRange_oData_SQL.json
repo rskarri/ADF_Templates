@@ -98,7 +98,7 @@
 								},
 								"ifFalseActivities": [
 									{
-										"name": "Copy PaymentDetails to SQL",
+										"name": "Copy InvoiceSales to SQL",
 										"type": "Copy",
 										"dependsOn": [],
 										"policy": {
