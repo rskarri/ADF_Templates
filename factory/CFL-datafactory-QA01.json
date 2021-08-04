@@ -1,13 +1,5 @@
 {
 	"name": "CFL-datafactory-QA01",
-	"properties": {
-		"globalParameters": {
-			"fromDateRZ": {
-				"type": "string",
-				"value": "0"
-			}
-		}
-	},
 	"location": "centralindia",
 	"identity": {
 		"type": "SystemAssigned",
