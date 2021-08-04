@@ -1699,7 +1699,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select MAX(Creat ) as maxDate FROM [dbo].[InvoiceSales]",
+							"value": "select MAX(Creat ) as maxDate FROM [dbo].[CustomerMaster]",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
