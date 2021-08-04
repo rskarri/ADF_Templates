@@ -131,10 +131,7 @@
 									"referenceName": "DS_AzureSqlTable_Dynmamic",
 									"type": "DatasetReference",
 									"parameters": {
-										"SQLTableName": {
-											"value": "@variables('SQL_Table')",
-											"type": "Expression"
-										}
+										"SQLTableName": "CustomerMaster"
 									}
 								}
 							]
