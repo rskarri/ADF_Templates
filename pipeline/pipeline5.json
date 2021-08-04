@@ -67,7 +67,7 @@
 							}
 						},
 						{
-							"name": "Top",
+							"name": "skipTmp",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
@@ -79,11 +79,8 @@
 							],
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "top",
-								"value": {
-									"value": "@string(add(int(variables('skip')),100000))",
-									"type": "Expression"
-								}
+								"variableName": "skipTmp",
+								"value": "@string(add(int(variables('skip')),100000))"
 							}
 						}
 					],
@@ -105,6 +102,10 @@
 				"defaultValue": "0"
 			},
 			"top": {
+				"type": "String",
+				"defaultValue": "100000"
+			},
+			"skipTmp": {
 				"type": "String",
 				"defaultValue": "0"
 			}
