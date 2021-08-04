@@ -1,5 +1,5 @@
 {
-	"name": "pipeline5_copy1",
+	"name": "PL_Failedprocess_by_1L_records",
 	"properties": {
 		"activities": [
 			{
@@ -161,8 +161,15 @@
 			},
 			"top": {
 				"type": "String",
-				"defaultValue": "-100000"
+				"defaultValue": "100000"
+			},
+			"skipTmp": {
+				"type": "String",
+				"defaultValue": "0"
 			}
+		},
+		"folder": {
+			"name": "QA"
 		},
 		"annotations": []
 	}
