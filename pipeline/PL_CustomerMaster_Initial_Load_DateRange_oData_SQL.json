@@ -1583,6 +1583,23 @@
 												}
 											}
 										]
+									},
+									{
+										"name": "Set variable1",
+										"type": "SetVariable",
+										"dependsOn": [
+											{
+												"activity": "Copy CustomerMaster to SQL",
+												"dependencyConditions": [
+													"Failed"
+												]
+											}
+										],
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "counter",
+											"value": "2"
+										}
 									}
 								],
 								"ifTrueActivities": [
