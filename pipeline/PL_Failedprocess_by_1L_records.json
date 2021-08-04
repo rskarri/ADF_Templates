@@ -14,7 +14,7 @@
 					},
 					"activities": [
 						{
-							"name": "counter_copy1",
+							"name": "counter",
 							"type": "SetVariable",
 							"dependsOn": [],
 							"userProperties": [],
@@ -27,11 +27,11 @@
 							}
 						},
 						{
-							"name": "tmp_copy1",
+							"name": "tmp",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
-									"activity": "counter_copy1",
+									"activity": "counter",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -47,11 +47,11 @@
 							}
 						},
 						{
-							"name": "Skip_copy1",
+							"name": "Skip",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
-									"activity": "tmp_copy1",
+									"activity": "tmp",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -61,17 +61,17 @@
 							"typeProperties": {
 								"variableName": "skip",
 								"value": {
-									"value": "@string(add(int(variables('top')),100000))",
+									"value": "@variables('skipTmp')",
 									"type": "Expression"
 								}
 							}
 						},
 						{
-							"name": "Top_copy1",
+							"name": "skipTmp",
 							"type": "SetVariable",
 							"dependsOn": [
 								{
-									"activity": "Skip_copy1",
+									"activity": "Skip",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -79,9 +79,9 @@
 							],
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "top",
+								"variableName": "skipTmp",
 								"value": {
-									"value": "100000",
+									"value": "@string(add(int(variables('skip')),100000))",
 									"type": "Expression"
 								}
 							}
@@ -91,7 +91,7 @@
 							"type": "Copy",
 							"dependsOn": [
 								{
-									"activity": "Top_copy1",
+									"activity": "skipTmp",
 									"dependencyConditions": [
 										"Succeeded"
 									]
