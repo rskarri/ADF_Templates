@@ -1,0 +1,114 @@
+{
+	"name": "pipeline5",
+	"properties": {
+		"activities": [
+			{
+				"name": "Until1",
+				"type": "Until",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@if(equals(int(variables('counter')),10) , bool('true'), bool('false'))",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "counter",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "counter",
+								"value": {
+									"value": "@variables('tmpCounter')",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "tmp",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "counter",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "tmpCounter",
+								"value": {
+									"value": "@string(add(int(variables('counter')),1))",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Skip",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "tmp",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "skip",
+								"value": {
+									"value": "@string(add(int(variables('top')),100000))",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Top",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Skip",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "top",
+								"value": {
+									"value": "100000",
+									"type": "Expression"
+								}
+							}
+						}
+					],
+					"timeout": "7.00:00:00"
+				}
+			}
+		],
+		"variables": {
+			"counter": {
+				"type": "String",
+				"defaultValue": "0"
+			},
+			"tmpCounter": {
+				"type": "String",
+				"defaultValue": "0"
+			},
+			"skip": {
+				"type": "String",
+				"defaultValue": "0"
+			},
+			"top": {
+				"type": "String",
+				"defaultValue": "-100000"
+			}
+		},
+		"annotations": []
+	}
+}
