@@ -1647,7 +1647,7 @@
 				"typeProperties": {
 					"variableName": "startValue",
 					"value": {
-						"value": "@subtractFromTime(pipeline().parameters.P_StartDate, 0, 'Day')",
+						"value": "@subtractFromTime(pipeline().parameters.P_StartDate, -1, 'Day')",
 						"type": "Expression"
 					}
 				}
