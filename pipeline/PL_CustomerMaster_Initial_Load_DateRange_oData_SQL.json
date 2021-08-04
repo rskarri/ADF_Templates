@@ -28,7 +28,7 @@
 							"typeProperties": {
 								"variableName": "fromDate",
 								"value": {
-									"value": "@addToTime(variables('startValue'), -1, 'Day')",
+									"value": "@addToTime(variables('startValue'), 1, 'Day')",
 									"type": "Expression"
 								}
 							}
