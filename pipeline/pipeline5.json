@@ -61,7 +61,7 @@
 							"typeProperties": {
 								"variableName": "skip",
 								"value": {
-									"value": "@variables('top')",
+									"value": "@variables('skipTmp')",
 									"type": "Expression"
 								}
 							}
