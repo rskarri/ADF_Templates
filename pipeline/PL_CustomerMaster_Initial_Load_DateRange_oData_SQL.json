@@ -1701,7 +1701,7 @@
 																"value": "$filter=CreAt eq datetime'@{variables('fromDateRZ')}'&$skip=variables('skip')&$top=variables('top')",
 																"type": "Expression"
 															},
-															"httpRequestTimeout": "00:05:00"
+															"httpRequestTimeout": "00:30:00"
 														},
 														"sink": {
 															"type": "AzureSqlSink",
