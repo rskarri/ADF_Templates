@@ -118,7 +118,23 @@
 									"type": "AzureSqlSink",
 									"writeBehavior": "insert"
 								},
-								"enableStaging": false
+								"enableStaging": false,
+								"parallelCopies": 6,
+								"enableSkipIncompatibleRow": true,
+								"logSettings": {
+									"enableCopyActivityLog": true,
+									"copyActivityLogSettings": {
+										"logLevel": "Warning",
+										"enableReliableLogging": false
+									},
+									"logLocationSettings": {
+										"linkedServiceName": {
+											"referenceName": "LS_AzureDataLakeStorage",
+											"type": "LinkedServiceReference"
+										},
+										"path": "datafactory-data/FailedPipeline"
+									}
+								}
 							},
 							"inputs": [
 								{
