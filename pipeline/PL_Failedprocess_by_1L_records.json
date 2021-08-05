@@ -9,7 +9,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@if(equals(int(variables('counter')),10) , bool('true'), bool('false'))",
+						"value": "@if(equals(int(variables('counter')),15) , bool('true'), bool('false'))",
 						"type": "Expression"
 					},
 					"activities": [
