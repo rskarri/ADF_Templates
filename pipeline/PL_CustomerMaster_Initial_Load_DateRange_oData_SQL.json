@@ -1628,7 +1628,7 @@
 												},
 												"D_EndDate": {
 													"value": {
-														"value": "@variables('d_enddate')",
+														"value": "@variables('d_startdate')",
 														"type": "Expression"
 													},
 													"type": "String"
