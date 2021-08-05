@@ -1576,9 +1576,9 @@
 										"type": "ExecutePipeline",
 										"dependsOn": [
 											{
-												"activity": "Copy CustomerMaster to SQL",
+												"activity": "delete old records_copy1",
 												"dependencyConditions": [
-													"Failed"
+													"Succeeded"
 												]
 											}
 										],
@@ -1595,6 +1595,60 @@
 													"type": "Expression"
 												}
 											}
+										}
+									},
+									{
+										"name": "delete old records_copy1",
+										"type": "SqlServerStoredProcedure",
+										"dependsOn": [
+											{
+												"activity": "Copy CustomerMaster to SQL",
+												"dependencyConditions": [
+													"Failed"
+												]
+											}
+										],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": "[dbo].[SP_DeleteTable_DateRange]",
+											"storedProcedureParameters": {
+												"D_StartDate": {
+													"value": {
+														"value": "@variables('d_startdate')",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"D_EndDate": {
+													"value": {
+														"value": "@variables('d_enddate')",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"TableName": {
+													"value": {
+														"value": "@variables('SQL_Table')",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"D_ColName": {
+													"value": "CreAt",
+													"type": "String"
+												}
+											}
+										},
+										"linkedServiceName": {
+											"referenceName": "LS_AzureSqlDatabase",
+											"type": "LinkedServiceReference"
 										}
 									}
 								],
