@@ -120,16 +120,19 @@
 											},
 											"sink": {
 												"type": "AzureSqlSink",
-												"writeBehavior": "insert",
-												"disableMetricsCollection": false
+												"disableMetricsCollection": false,
+												"writeBehavior": "insert"
 											},
 											"enableStaging": false,
 											"enableSkipIncompatibleRow": true
 										},
 										"inputs": [
 											{
-												"referenceName": "DS_SAP_oData_InvoiceSales",
-												"type": "DatasetReference"
+												"referenceName": "DS_SAP_OData_Dynamic",
+												"type": "DatasetReference",
+												"parameters": {
+													"EntitySetName": "SalesDataSet"
+												}
 											}
 										],
 										"outputs": [
