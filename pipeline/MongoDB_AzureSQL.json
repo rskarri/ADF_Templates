@@ -25,7 +25,124 @@
 						"disableMetricsCollection": false,
 						"writeBehavior": "insert"
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['state']"
+								},
+								"sink": {
+									"name": "state",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['district']"
+								},
+								"sink": {
+									"name": "district",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retailer_id']"
+								},
+								"sink": {
+									"name": "retailer_id",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['retailer_name']"
+								},
+								"sink": {
+									"name": "retailer_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['nature']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['company']"
+								},
+								"sink": {
+									"name": "company",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['plant']"
+								},
+								"sink": {
+									"name": "plant",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['product']"
+								},
+								"sink": {
+									"name": "product",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['opening_balance']"
+								},
+								"sink": {
+									"name": "opening_balance",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['received_qty']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['sold_qty']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['availability']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['closing_bal']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['stk_date']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['login_id']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['date_q']['$date']"
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
