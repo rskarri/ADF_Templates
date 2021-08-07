@@ -1,5 +1,5 @@
 {
-	"name": "DS_AzureSqlTable_copy1",
+	"name": "DS_AzureSqlTable_RetailStockNew",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_AzureSqlDatabase",
@@ -10,7 +10,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "Employee"
+			"table": "retailer_stock_new"
 		}
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"
