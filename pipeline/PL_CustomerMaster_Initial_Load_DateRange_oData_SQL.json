@@ -1896,14 +1896,6 @@
 			"tmpCounter": {
 				"type": "String",
 				"defaultValue": "0"
-			},
-			"skip": {
-				"type": "String",
-				"defaultValue": "0"
-			},
-			"top": {
-				"type": "String",
-				"defaultValue": "-50000"
 			}
 		},
 		"folder": {
