@@ -1,5 +1,5 @@
 {
-	"name": "pipeline3",
+	"name": "MongoDB_AzureSQL",
 	"properties": {
 		"activities": [
 			{
@@ -21,9 +21,9 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"writeBehavior": "insert",
 						"tableOption": "autoCreate",
-						"disableMetricsCollection": false
+						"disableMetricsCollection": false,
+						"writeBehavior": "insert"
 					},
 					"enableStaging": false
 				},
