@@ -55,7 +55,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_AzureSqlTable_copy1",
+						"referenceName": "DS_AzureSqlTable_RetailStockNew",
 						"type": "DatasetReference"
 					}
 				]
@@ -106,7 +106,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_AzureSqlTable_copy1",
+						"referenceName": "DS_AzureSqlTable_RetailStockNew",
 						"type": "DatasetReference"
 					}
 				]
@@ -164,7 +164,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_AzureSqlTable_copy1",
+						"referenceName": "DS_AzureSqlTable_RetailStockNew",
 						"type": "DatasetReference"
 					}
 				]

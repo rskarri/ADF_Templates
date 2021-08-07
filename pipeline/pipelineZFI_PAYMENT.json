@@ -22,9 +22,9 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"writeBehavior": "insert",
 						"tableOption": "autoCreate",
-						"disableMetricsCollection": false
+						"disableMetricsCollection": false,
+						"writeBehavior": "insert"
 					},
 					"enableStaging": false,
 					"translator": {
@@ -48,7 +48,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_AzureSqlTable_copy1",
+						"referenceName": "DS_AzureSqlTable_RetailStockNew",
 						"type": "DatasetReference"
 					}
 				]
