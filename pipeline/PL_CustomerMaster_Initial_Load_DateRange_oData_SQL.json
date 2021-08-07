@@ -1593,6 +1593,10 @@
 												"pp": {
 													"value": "@variables('fromDateRZ')",
 													"type": "Expression"
+												},
+												"sqlTable": {
+													"value": "@variables('SQL_Table')",
+													"type": "Expression"
 												}
 											}
 										}
