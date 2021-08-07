@@ -81,7 +81,7 @@
 							"typeProperties": {
 								"variableName": "skipTmp",
 								"value": {
-									"value": "@string(add(int(variables('skip')),variables('top')))",
+									"value": "@string(add(int(variables('skip')),int(variables('top'))))",
 									"type": "Expression"
 								}
 							}
