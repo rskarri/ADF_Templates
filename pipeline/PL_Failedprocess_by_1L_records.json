@@ -109,7 +109,7 @@
 								"source": {
 									"type": "ODataSource",
 									"query": {
-										"value": "$filter=CreAt eq datetime'@{pipeline().parameters.pp}'&$skip=@{variables('skip')}&$top=@{variables('top')}&format=json",
+										"value": "$filter=CreAt eq datetime'2019-10-16T00:00:0'",
 										"type": "Expression"
 									},
 									"httpRequestTimeout": "00:30:00"
