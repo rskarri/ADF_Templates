@@ -113,7 +113,7 @@
 											"source": {
 												"type": "ODataSource",
 												"query": {
-													"value": "$filter=CreAt eq datetime'@{variables('fromDateRZ')}'",
+													"value": "$filter=CreAt eq datetime'@{variables('fromDateRZ')}'&format=json",
 													"type": "Expression"
 												},
 												"httpRequestTimeout": "00:30:00"
