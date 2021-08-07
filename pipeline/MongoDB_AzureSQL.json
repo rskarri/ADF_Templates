@@ -31,6 +31,15 @@
 						"mappings": [
 							{
 								"source": {
+									"path": "$['report_id']"
+								},
+								"sink": {
+									"name": "report_id",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
 									"path": "$['state']"
 								},
 								"sink": {
@@ -67,24 +76,10 @@
 							},
 							{
 								"source": {
-									"path": "$['nature']"
-								}
-							},
-							{
-								"source": {
 									"path": "$['company']"
 								},
 								"sink": {
 									"name": "company",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"path": "$['plant']"
-								},
-								"sink": {
-									"name": "plant",
 									"type": "String"
 								}
 							},
@@ -99,46 +94,38 @@
 							},
 							{
 								"source": {
-									"path": "$['opening_balance']"
+									"path": "$['plant']"
 								},
 								"sink": {
-									"name": "opening_balance",
+									"name": "plant",
 									"type": "String"
 								}
 							},
 							{
 								"source": {
-									"path": "$['received_qty']"
+									"path": "$['opening_balance']"
+								},
+								"sink": {
+									"name": "opening_balance",
+									"type": "Decimal"
 								}
 							},
 							{
 								"source": {
-									"path": "$['sold_qty']"
-								}
-							},
-							{
-								"source": {
-									"path": "$['availability']"
-								}
-							},
-							{
-								"source": {
-									"path": "$['closing_bal']"
-								}
-							},
-							{
-								"source": {
-									"path": "$['stk_date']"
-								}
-							},
-							{
-								"source": {
-									"path": "$['login_id']"
+									"path": "$['stock_date']"
+								},
+								"sink": {
+									"name": "stock_date",
+									"type": "DateTime"
 								}
 							},
 							{
 								"source": {
 									"path": "$['date_q']['$date']"
+								},
+								"sink": {
+									"name": "date_q",
+									"type": "DateTime"
 								}
 							}
 						]
