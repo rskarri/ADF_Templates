@@ -1,0 +1,23 @@
+{
+	"name": "DS_SAP_ODataResource",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OData_SAP_HANA",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"EntitySetName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "ODataResource",
+		"schema": [],
+		"typeProperties": {
+			"path": {
+				"value": "@dataset().EntitySetName",
+				"type": "Expression"
+			}
+		}
+	}
+}
