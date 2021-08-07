@@ -1452,6 +1452,10 @@
 											}
 										},
 										{
+											"source": {
+												"name": "TotalAmt",
+												"type": "Decimal"
+											},
 											"sink": {
 												"name": "Totamt",
 												"type": "Decimal"
@@ -1478,6 +1482,10 @@
 											}
 										},
 										{
+											"source": {
+												"name": "ContactPerName",
+												"type": "String"
+											},
 											"sink": {
 												"name": "Contractpername",
 												"type": "String"
