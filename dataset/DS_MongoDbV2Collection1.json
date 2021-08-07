@@ -9,7 +9,7 @@
 		"type": "MongoDbV2Collection",
 		"schema": [],
 		"typeProperties": {
-			"collection": "cil_daily_pos_sales_new"
+			"collection": "retailer_stock_new"
 		}
 	}
 }
