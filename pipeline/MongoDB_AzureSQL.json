@@ -26,7 +26,7 @@
 						"writeBehavior": "insert"
 					},
 					"enableStaging": false,
-					"parallelCopies": 10,
+					"parallelCopies": 20,
 					"translator": {
 						"type": "TabularTranslator",
 						"mappings": [
