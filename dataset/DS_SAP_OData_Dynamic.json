@@ -1,5 +1,5 @@
 {
-	"name": "DS_SAP_ODataResource",
+	"name": "DS_SAP_OData_Dynamic",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "OData_SAP_HANA",
