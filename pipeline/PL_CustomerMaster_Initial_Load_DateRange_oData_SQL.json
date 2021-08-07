@@ -1903,7 +1903,7 @@
 			},
 			"top": {
 				"type": "String",
-				"defaultValue": "-100000"
+				"defaultValue": "-50000"
 			}
 		},
 		"folder": {
