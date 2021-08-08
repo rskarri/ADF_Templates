@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@lessOrEquals(int(variables('skip')), add( int(variables('eSzie')), int(variables('top'))))",
+						"value": "@if(lessOrEquals(int(variables('skip')), add( int(variables('eSzie')), int(variables('top')))), 'true','false')",
 						"type": "Expression"
 					},
 					"activities": [
@@ -1606,6 +1606,10 @@
 			},
 			"eSzie": {
 				"type": "String"
+			},
+			"fFlag": {
+				"type": "Boolean",
+				"defaultValue": false
 			}
 		},
 		"folder": {
