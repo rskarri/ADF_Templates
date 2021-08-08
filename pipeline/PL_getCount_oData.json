@@ -1572,9 +1572,6 @@
 			}
 		],
 		"parameters": {
-			"pStartValue": {
-				"type": "string"
-			},
 			"pfromDateRZ": {
 				"type": "string"
 			},
