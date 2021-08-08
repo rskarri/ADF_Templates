@@ -1885,7 +1885,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"url": {
-						"value": "http://172.26.2.228:8000/sap/opu/odata/sap/ZCUST_DETAILS2_CDS_CDS/ZCUST_DETAILS2_CDS/$count?$filter=CreAt%20eq%20datetime%272019-10-16T00:00:00%27%20and%20SOrg%20eq%20%27FIND%27",
+						"value": "@http://172.26.2.228:8000/sap/opu/odata/sap/ZCUST_DETAILS2_CDS_CDS/ZCUST_DETAILS2_CDS/$count?$filter=CreAt ge datetime'variables('startValue')'",
 						"type": "Expression"
 					},
 					"connectVia": {
