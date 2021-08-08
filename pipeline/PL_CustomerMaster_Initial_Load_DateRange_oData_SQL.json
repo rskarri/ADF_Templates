@@ -7,7 +7,7 @@
 				"type": "Until",
 				"dependsOn": [
 					{
-						"activity": "Set count",
+						"activity": "Execute Pipeline1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -1865,8 +1865,8 @@
 				}
 			},
 			{
-				"name": "getCountWeb",
-				"type": "WebActivity",
+				"name": "Execute Pipeline1",
+				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
 						"activity": "startValuefomPipeline",
@@ -1875,46 +1875,18 @@
 						]
 					}
 				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"url": {
-						"value": "@http://172.26.2.228:8000/sap/opu/odata/sap/ZCUST_DETAILS2_CDS_CDS/ZCUST_DETAILS2_CDS/$count?$filter=CreAt ge datetime'variables('startValue')'",
-						"type": "Expression"
+					"pipeline": {
+						"referenceName": "PL_getCount_oData",
+						"type": "PipelineReference"
 					},
-					"connectVia": {
-						"referenceName": "integrationRuntime-SAP-HANA",
-						"type": "IntegrationRuntimeReference"
-					},
-					"method": "GET",
-					"headers": {
-						"Authorization": "Basic Y2FyYnluZXRlY2g6V2VsY29tZUAy"
-					}
-				}
-			},
-			{
-				"name": "Set count",
-				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "getCountWeb",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "count",
-					"value": {
-						"value": "@activity('getCountWeb').output.Response",
-						"type": "Expression"
+					"waitOnCompletion": true,
+					"parameters": {
+						"pCount": {
+							"value": "@variables('startValue')",
+							"type": "Expression"
+						}
 					}
 				}
 			}
