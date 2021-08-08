@@ -29,26 +29,6 @@
 					},
 					"disableCertValidation": true
 				}
-			},
-			{
-				"name": "Set count",
-				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "getCountWeb",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "vcount",
-					"value": {
-						"value": "@activity('getCountWeb').output.Response",
-						"type": "Expression"
-					}
-				}
 			}
 		],
 		"parameters": {
