@@ -5,11 +5,18 @@
 			{
 				"name": "Until1_copy1",
 				"type": "Until",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Execute Pipeline1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@if(equals(int(variables('counter')),15) , bool('true'), bool('false'))",
+						"value": "@activity('Execute Pipeline1').output",
 						"type": "Expression"
 					},
 					"activities": [
@@ -108,7 +115,10 @@
 							"typeProperties": {
 								"source": {
 									"type": "ODataSource",
-									"query": "$filter=CreAt eq datetime'@{pipeline().parameters.pp}'&$skip=@{variables('skip')}&$top=@{variables('top')}&format=json",
+									"query": {
+										"value": "$filter=CreAt eq datetime'@{pipeline().parameters.pp}'&$skip=@{variables('skip')}&$top=@{variables('top')}&format=json",
+										"type": "Expression"
+									},
 									"httpRequestTimeout": "00:10:00"
 								},
 								"sink": {
@@ -1562,6 +1572,25 @@
 						}
 					],
 					"timeout": "7.00:00:00"
+				}
+			},
+			{
+				"name": "Execute Pipeline1",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PL_getCount_oData",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"pCount": {
+							"value": "@pipeline().parameters.pp",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],
