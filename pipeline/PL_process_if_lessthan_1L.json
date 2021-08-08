@@ -1,70 +1,15 @@
 {
-	"name": "PL_getCount_oData",
+	"name": "PL_process_if_lessthan_1L",
 	"properties": {
 		"activities": [
 			{
-				"name": "getCountWeb",
-				"type": "WebActivity",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"url": {
-						"value": "http://172.26.2.228:8000/sap/opu/odata/sap/ZCUST_DETAILS2_CDS_CDS/ZCUST_DETAILS2_CDS/$count?$filter=CreAt eq datetime'@{pipeline().parameters.pfromDateRZ}'",
-						"type": "Expression"
-					},
-					"connectVia": {
-						"referenceName": "integrationRuntime-SAP-HANA",
-						"type": "IntegrationRuntimeReference"
-					},
-					"method": "GET",
-					"headers": {
-						"Authorization": "Basic Y2FyYnluZXRlY2g6V2VsY29tZUAy"
-					},
-					"disableCertValidation": true
-				}
-			},
-			{
-				"name": "Set variable1",
-				"type": "SetVariable",
-				"dependsOn": [
-					{
-						"activity": "getCountWeb",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "vcount",
-					"value": {
-						"value": "@activity('getCountWeb').output.Response",
-						"type": "Expression"
-					}
-				}
-			},
-			{
 				"name": "If Condition1",
 				"type": "IfCondition",
-				"dependsOn": [
-					{
-						"activity": "Set variable1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@if(greater(int(variables('vcount')),100000),'true','false')",
+						"value": "@if(greater(int(variables('vcount')),int(pipeline().parameters.topMax)),'true','false')",
 						"type": "Expression"
 					},
 					"ifFalseActivities": [
@@ -1577,12 +1522,18 @@
 			},
 			"pSQL_Table": {
 				"type": "string"
+			},
+			"topMax": {
+				"type": "string"
 			}
 		},
 		"variables": {
 			"vcount": {
 				"type": "String"
 			}
+		},
+		"folder": {
+			"name": "QA"
 		},
 		"annotations": []
 	}
