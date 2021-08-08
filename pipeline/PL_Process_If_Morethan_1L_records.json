@@ -69,7 +69,7 @@
 								"source": {
 									"type": "ODataSource",
 									"query": {
-										"value": "$filter=@{pipeline().parameters.vColName} eq datetime'@{pipeline().parameters.pp}'&$skip=@{variables('skip')}&$top=@{variables('top')}&format=json",
+										"value": "$filter=@{pipeline().parameters.vColName} eq datetime'@{pipeline().parameters.pp}'&$skip=@{variables('skip')}&$top=@{variables('top')}&$format=json",
 										"type": "Expression"
 									},
 									"httpRequestTimeout": "00:30:00"
