@@ -84,7 +84,7 @@
 								"source": {
 									"type": "ODataSource",
 									"query": {
-										"value": "$filter=CreAt eq datetime'@{variables('fromDateRZ')}'&format=json",
+										"value": "$filter=CreAt eq datetime'@{pipeline().parameters.pfromDateRZ}'&format=json",
 										"type": "Expression"
 									},
 									"httpRequestTimeout": "00:30:00"
@@ -1557,11 +1557,11 @@
 								"waitOnCompletion": true,
 								"parameters": {
 									"pp": {
-										"value": "@variables('fromDateRZ')",
+										"value": "@pipeline().parameters.pfromDateRZ",
 										"type": "Expression"
 									},
 									"sqlTable": {
-										"value": "@variables('SQL_Table')",
+										"value": "@pipeline().parameters.pSQL_Table",
 										"type": "Expression"
 									}
 								}
@@ -1573,6 +1573,12 @@
 		],
 		"parameters": {
 			"pStartValue": {
+				"type": "string"
+			},
+			"pfromDateRZ": {
+				"type": "string"
+			},
+			"pSQL_Table": {
 				"type": "string"
 			}
 		},
