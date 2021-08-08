@@ -96,7 +96,7 @@
 										},
 										{
 											"source": {
-												"name": "SOrg",
+												"name": "Sorg",
 												"type": "String"
 											},
 											"sink": {
@@ -106,7 +106,7 @@
 										},
 										{
 											"source": {
-												"name": "DC",
+												"name": "Dc",
 												"type": "String"
 											},
 											"sink": {
@@ -116,7 +116,7 @@
 										},
 										{
 											"source": {
-												"name": "DV",
+												"name": "Dv",
 												"type": "String"
 											},
 											"sink": {
@@ -126,7 +126,7 @@
 										},
 										{
 											"source": {
-												"name": "CrdArea",
+												"name": "Crdarea",
 												"type": "String"
 											},
 											"sink": {
@@ -136,7 +136,7 @@
 										},
 										{
 											"source": {
-												"name": "SOff",
+												"name": "Soff",
 												"type": "String"
 											},
 											"sink": {
@@ -146,7 +146,7 @@
 										},
 										{
 											"source": {
-												"name": "Soff_desc",
+												"name": "SoffDesc",
 												"type": "String"
 											},
 											"sink": {
@@ -156,7 +156,7 @@
 										},
 										{
 											"source": {
-												"name": "SalesGroup",
+												"name": "Salesgroup",
 												"type": "String"
 											},
 											"sink": {
@@ -166,7 +166,7 @@
 										},
 										{
 											"source": {
-												"name": "SGrpDesc",
+												"name": "Sgrpdesc",
 												"type": "String"
 											},
 											"sink": {
@@ -176,7 +176,7 @@
 										},
 										{
 											"source": {
-												"name": "SDst",
+												"name": "Sdst",
 												"type": "String"
 											},
 											"sink": {
@@ -186,7 +186,7 @@
 										},
 										{
 											"source": {
-												"name": "SDstDesc",
+												"name": "Sdstdesc",
 												"type": "String"
 											},
 											"sink": {
@@ -196,7 +196,7 @@
 										},
 										{
 											"source": {
-												"name": "CC",
+												"name": "Cc",
 												"type": "String"
 											},
 											"sink": {
@@ -206,7 +206,7 @@
 										},
 										{
 											"source": {
-												"name": "CntryName",
+												"name": "Cntryname",
 												"type": "String"
 											},
 											"sink": {
@@ -216,7 +216,7 @@
 										},
 										{
 											"source": {
-												"name": "Cred_Crl_Area_Desc",
+												"name": "CredCrlAreaDesc",
 												"type": "String"
 											},
 											"sink": {
@@ -226,7 +226,7 @@
 										},
 										{
 											"source": {
-												"name": "JOCG",
+												"name": "Jocg",
 												"type": "String"
 											},
 											"sink": {
@@ -236,7 +236,7 @@
 										},
 										{
 											"source": {
-												"name": "JOCG_VAL",
+												"name": "JocgVal",
 												"type": "String"
 											},
 											"sink": {
@@ -246,7 +246,7 @@
 										},
 										{
 											"source": {
-												"name": "JOSG",
+												"name": "Josg",
 												"type": "String"
 											},
 											"sink": {
@@ -256,7 +256,7 @@
 										},
 										{
 											"source": {
-												"name": "JOSG_VAL",
+												"name": "JosgVal",
 												"type": "String"
 											},
 											"sink": {
@@ -266,7 +266,7 @@
 										},
 										{
 											"source": {
-												"name": "JOIG",
+												"name": "Joig",
 												"type": "String"
 											},
 											"sink": {
@@ -276,7 +276,7 @@
 										},
 										{
 											"source": {
-												"name": "JOIG_VAL",
+												"name": "JoigVal",
 												"type": "String"
 											},
 											"sink": {
@@ -286,7 +286,7 @@
 										},
 										{
 											"source": {
-												"name": "JOUG",
+												"name": "Joug",
 												"type": "String"
 											},
 											"sink": {
@@ -296,7 +296,7 @@
 										},
 										{
 											"source": {
-												"name": "JOUG_VAL",
+												"name": "JougVal",
 												"type": "String"
 											},
 											"sink": {
@@ -306,7 +306,7 @@
 										},
 										{
 											"source": {
-												"name": "TCS",
+												"name": "Tcs",
 												"type": "String"
 											},
 											"sink": {
@@ -316,7 +316,7 @@
 										},
 										{
 											"source": {
-												"name": "TCS_VAL",
+												"name": "TcsVal",
 												"type": "String"
 											},
 											"sink": {
@@ -336,7 +336,7 @@
 										},
 										{
 											"source": {
-												"name": "RDst",
+												"name": "Rdst",
 												"type": "String"
 											},
 											"sink": {
@@ -346,7 +346,7 @@
 										},
 										{
 											"source": {
-												"name": "RDstDesc",
+												"name": "Rdstdesc",
 												"type": "String"
 											},
 											"sink": {
@@ -356,7 +356,7 @@
 										},
 										{
 											"source": {
-												"name": "TalCode",
+												"name": "Talcode",
 												"type": "String"
 											},
 											"sink": {
@@ -366,7 +366,7 @@
 										},
 										{
 											"source": {
-												"name": "Talukk_Desc",
+												"name": "TalukkDesc",
 												"type": "String"
 											},
 											"sink": {
@@ -376,7 +376,7 @@
 										},
 										{
 											"source": {
-												"name": "ADA_Code",
+												"name": "AdaCode",
 												"type": "String"
 											},
 											"sink": {
@@ -386,7 +386,7 @@
 										},
 										{
 											"source": {
-												"name": "ADA_Desc",
+												"name": "AdaDesc",
 												"type": "String"
 											},
 											"sink": {
@@ -396,7 +396,7 @@
 										},
 										{
 											"source": {
-												"name": "BPCode",
+												"name": "Bpcode",
 												"type": "String"
 											},
 											"sink": {
@@ -406,7 +406,7 @@
 										},
 										{
 											"source": {
-												"name": "CustName",
+												"name": "Custname",
 												"type": "String"
 											},
 											"sink": {
@@ -446,7 +446,7 @@
 										},
 										{
 											"source": {
-												"name": "CustCity",
+												"name": "Custcity",
 												"type": "String"
 											},
 											"sink": {
@@ -456,7 +456,7 @@
 										},
 										{
 											"source": {
-												"name": "CustDist",
+												"name": "Custdist",
 												"type": "String"
 											},
 											"sink": {
@@ -466,7 +466,7 @@
 										},
 										{
 											"source": {
-												"name": "PinCode",
+												"name": "Pincode",
 												"type": "String"
 											},
 											"sink": {
@@ -476,7 +476,7 @@
 										},
 										{
 											"source": {
-												"name": "TelNum1",
+												"name": "Telnum1",
 												"type": "String"
 											},
 											"sink": {
@@ -486,7 +486,7 @@
 										},
 										{
 											"source": {
-												"name": "MobNum",
+												"name": "Mobnum",
 												"type": "String"
 											},
 											"sink": {
@@ -496,7 +496,7 @@
 										},
 										{
 											"source": {
-												"name": "MailID",
+												"name": "Mailid",
 												"type": "String"
 											},
 											"sink": {
@@ -506,7 +506,7 @@
 										},
 										{
 											"source": {
-												"name": "TinNo",
+												"name": "Tinno",
 												"type": "String"
 											},
 											"sink": {
@@ -516,7 +516,7 @@
 										},
 										{
 											"source": {
-												"name": "TaxNo5",
+												"name": "Taxno5",
 												"type": "String"
 											},
 											"sink": {
@@ -526,7 +526,7 @@
 										},
 										{
 											"source": {
-												"name": "TaxType",
+												"name": "Taxtype",
 												"type": "String"
 											},
 											"sink": {
@@ -536,7 +536,7 @@
 										},
 										{
 											"source": {
-												"name": "OrdBlk_Desc",
+												"name": "OrdblkDesc",
 												"type": "String"
 											},
 											"sink": {
@@ -546,7 +546,7 @@
 										},
 										{
 											"source": {
-												"name": "CreBy",
+												"name": "Creby",
 												"type": "String"
 											},
 											"sink": {
@@ -556,7 +556,7 @@
 										},
 										{
 											"source": {
-												"name": "CreAt",
+												"name": "Creat",
 												"type": "DateTime"
 											},
 											"sink": {
@@ -566,7 +566,7 @@
 										},
 										{
 											"source": {
-												"name": "CreOn",
+												"name": "Creon",
 												"type": "TimeSpan"
 											},
 											"sink": {
@@ -576,7 +576,7 @@
 										},
 										{
 											"source": {
-												"name": "ChnBy",
+												"name": "Chnby",
 												"type": "String"
 											},
 											"sink": {
@@ -586,7 +586,7 @@
 										},
 										{
 											"source": {
-												"name": "ChnAt",
+												"name": "Chnat",
 												"type": "DateTime"
 											},
 											"sink": {
@@ -596,7 +596,7 @@
 										},
 										{
 											"source": {
-												"name": "ChnOn",
+												"name": "Chnon",
 												"type": "TimeSpan"
 											},
 											"sink": {
@@ -606,7 +606,7 @@
 										},
 										{
 											"source": {
-												"name": "PTerm",
+												"name": "Pterm",
 												"type": "String"
 											},
 											"sink": {
@@ -636,7 +636,7 @@
 										},
 										{
 											"source": {
-												"name": "POS",
+												"name": "Pos",
 												"type": "String"
 											},
 											"sink": {
@@ -646,7 +646,7 @@
 										},
 										{
 											"source": {
-												"name": "POS_PAN",
+												"name": "PosPan",
 												"type": "String"
 											},
 											"sink": {
@@ -666,7 +666,7 @@
 										},
 										{
 											"source": {
-												"name": "Payer_Name",
+												"name": "PayerName",
 												"type": "String"
 											},
 											"sink": {
@@ -686,7 +686,7 @@
 										},
 										{
 											"source": {
-												"name": "BTParty_name",
+												"name": "BtpartyName",
 												"type": "String"
 											},
 											"sink": {
@@ -706,7 +706,7 @@
 										},
 										{
 											"source": {
-												"name": "Stparty_name",
+												"name": "StpartyName",
 												"type": "String"
 											},
 											"sink": {
@@ -716,7 +716,7 @@
 										},
 										{
 											"source": {
-												"name": "ContactPerson",
+												"name": "Contactperson",
 												"type": "String"
 											},
 											"sink": {
@@ -726,7 +726,7 @@
 										},
 										{
 											"source": {
-												"name": "DekApptDate",
+												"name": "Dekapptdate",
 												"type": "DateTime"
 											},
 											"sink": {
@@ -736,7 +736,7 @@
 										},
 										{
 											"source": {
-												"name": "Fert_Lic_Date",
+												"name": "FertLicDate",
 												"type": "DateTime"
 											},
 											"sink": {
@@ -746,7 +746,7 @@
 										},
 										{
 											"source": {
-												"name": "FertLicExpDate",
+												"name": "Fertlicexpdate",
 												"type": "String"
 											},
 											"sink": {
@@ -756,7 +756,7 @@
 										},
 										{
 											"source": {
-												"name": "fertlicwholeno",
+												"name": "Fertlicwholeno",
 												"type": "String"
 											},
 											"sink": {
@@ -766,7 +766,7 @@
 										},
 										{
 											"source": {
-												"name": "PestLicno",
+												"name": "Pestlicno",
 												"type": "String"
 											},
 											"sink": {
@@ -776,7 +776,7 @@
 										},
 										{
 											"source": {
-												"name": "fertlicno",
+												"name": "Fertlicno",
 												"type": "String"
 											},
 											"sink": {
@@ -786,7 +786,7 @@
 										},
 										{
 											"source": {
-												"name": "PLType",
+												"name": "Pltype",
 												"type": "String"
 											},
 											"sink": {
@@ -796,7 +796,7 @@
 										},
 										{
 											"source": {
-												"name": "Reg_Des",
+												"name": "RegDes",
 												"type": "String"
 											},
 											"sink": {
@@ -806,7 +806,7 @@
 										},
 										{
 											"source": {
-												"name": "ECCNo",
+												"name": "Eccno",
 												"type": "String"
 											},
 											"sink": {
@@ -816,7 +816,7 @@
 										},
 										{
 											"source": {
-												"name": "CustAccGrp",
+												"name": "Custaccgrp",
 												"type": "String"
 											},
 											"sink": {
@@ -826,7 +826,7 @@
 										},
 										{
 											"source": {
-												"name": "TransZone",
+												"name": "Transzone",
 												"type": "String"
 											},
 											"sink": {
@@ -836,7 +836,7 @@
 										},
 										{
 											"source": {
-												"name": "TransZoneDesc",
+												"name": "Transzonedesc",
 												"type": "String"
 											},
 											"sink": {
@@ -846,7 +846,7 @@
 										},
 										{
 											"source": {
-												"name": "CustClass",
+												"name": "Custclass",
 												"type": "String"
 											},
 											"sink": {
@@ -856,7 +856,7 @@
 										},
 										{
 											"source": {
-												"name": "PanNo",
+												"name": "Panno",
 												"type": "String"
 											},
 											"sink": {
@@ -866,7 +866,7 @@
 										},
 										{
 											"source": {
-												"name": "PTermDesc",
+												"name": "Ptermdesc",
 												"type": "String"
 											},
 											"sink": {
@@ -876,7 +876,7 @@
 										},
 										{
 											"source": {
-												"name": "ExpDate",
+												"name": "Expdate",
 												"type": "DateTime"
 											},
 											"sink": {
@@ -886,7 +886,7 @@
 										},
 										{
 											"source": {
-												"name": "LegalStatus",
+												"name": "Legalstatus",
 												"type": "String"
 											},
 											"sink": {
@@ -896,7 +896,7 @@
 										},
 										{
 											"source": {
-												"name": "LegalStatusName",
+												"name": "Legalstatusname",
 												"type": "String"
 											},
 											"sink": {
@@ -906,7 +906,7 @@
 										},
 										{
 											"source": {
-												"name": "PriceGrp",
+												"name": "Pricegrp",
 												"type": "String"
 											},
 											"sink": {
@@ -916,7 +916,7 @@
 										},
 										{
 											"source": {
-												"name": "PrvMstRecNo",
+												"name": "Prvmstrecno",
 												"type": "String"
 											},
 											"sink": {
@@ -926,7 +926,7 @@
 										},
 										{
 											"source": {
-												"name": "AcAsnGrp",
+												"name": "Acasngrp",
 												"type": "String"
 											},
 											"sink": {
@@ -936,7 +936,7 @@
 										},
 										{
 											"source": {
-												"name": "SearchTerm1",
+												"name": "Searchterm1",
 												"type": "String"
 											},
 											"sink": {
@@ -946,7 +946,7 @@
 										},
 										{
 											"source": {
-												"name": "RetailerId",
+												"name": "Retailerid",
 												"type": "String"
 											},
 											"sink": {
@@ -956,7 +956,7 @@
 										},
 										{
 											"source": {
-												"name": "WhlSalId",
+												"name": "Whlsalid",
 												"type": "String"
 											},
 											"sink": {
@@ -966,7 +966,7 @@
 										},
 										{
 											"source": {
-												"name": "ACC",
+												"name": "Acc",
 												"type": "Boolean"
 											},
 											"sink": {
@@ -976,7 +976,7 @@
 										},
 										{
 											"source": {
-												"name": "SCC",
+												"name": "Scc",
 												"type": "Boolean"
 											},
 											"sink": {
@@ -986,7 +986,7 @@
 										},
 										{
 											"source": {
-												"name": "OASA",
+												"name": "Oasa",
 												"type": "String"
 											},
 											"sink": {
@@ -996,7 +996,7 @@
 										},
 										{
 											"source": {
-												"name": "OSSA",
+												"name": "Ossa",
 												"type": "String"
 											},
 											"sink": {
@@ -1006,7 +1006,7 @@
 										},
 										{
 											"source": {
-												"name": "AADF",
+												"name": "Aadf",
 												"type": "Boolean"
 											},
 											"sink": {
@@ -1016,7 +1016,7 @@
 										},
 										{
 											"source": {
-												"name": "SSDF",
+												"name": "Ssdf",
 												"type": "Boolean"
 											},
 											"sink": {
@@ -1026,7 +1026,7 @@
 										},
 										{
 											"source": {
-												"name": "SCDF",
+												"name": "Scdf",
 												"type": "Boolean"
 											},
 											"sink": {
@@ -1036,7 +1036,7 @@
 										},
 										{
 											"source": {
-												"name": "DASA",
+												"name": "Dasa",
 												"type": "String"
 											},
 											"sink": {
@@ -1046,7 +1046,7 @@
 										},
 										{
 											"source": {
-												"name": "DSSA",
+												"name": "Dssa",
 												"type": "String"
 											},
 											"sink": {
@@ -1056,7 +1056,7 @@
 										},
 										{
 											"source": {
-												"name": "BASA",
+												"name": "Basa",
 												"type": "String"
 											},
 											"sink": {
@@ -1066,7 +1066,7 @@
 										},
 										{
 											"source": {
-												"name": "BSSA",
+												"name": "Bssa",
 												"type": "String"
 											},
 											"sink": {
@@ -1076,7 +1076,7 @@
 										},
 										{
 											"source": {
-												"name": "ASA",
+												"name": "Asa",
 												"type": "String"
 											},
 											"sink": {
@@ -1086,7 +1086,7 @@
 										},
 										{
 											"source": {
-												"name": "SSA",
+												"name": "Ssa",
 												"type": "String"
 											},
 											"sink": {
@@ -1096,7 +1096,7 @@
 										},
 										{
 											"source": {
-												"name": "CDB",
+												"name": "Cdb",
 												"type": "Boolean"
 											},
 											"sink": {
@@ -1106,7 +1106,7 @@
 										},
 										{
 											"source": {
-												"name": "SCDB",
+												"name": "Scdb",
 												"type": "Boolean"
 											},
 											"sink": {
@@ -1126,7 +1126,7 @@
 										},
 										{
 											"source": {
-												"name": "ValArea",
+												"name": "Valarea",
 												"type": "String"
 											},
 											"sink": {
@@ -1136,7 +1136,7 @@
 										},
 										{
 											"source": {
-												"name": "PlntAsCust",
+												"name": "Plntascust",
 												"type": "String"
 											},
 											"sink": {
@@ -1146,7 +1146,7 @@
 										},
 										{
 											"source": {
-												"name": "PlntAsVend",
+												"name": "Plntasvend",
 												"type": "String"
 											},
 											"sink": {
@@ -1156,7 +1156,7 @@
 										},
 										{
 											"source": {
-												"name": "PlntRegio",
+												"name": "Plntregio",
 												"type": "String"
 											},
 											"sink": {
@@ -1166,7 +1166,7 @@
 										},
 										{
 											"source": {
-												"name": "GSTIN_Tax3",
+												"name": "GstinTax3",
 												"type": "String"
 											},
 											"sink": {
@@ -1176,7 +1176,7 @@
 										},
 										{
 											"source": {
-												"name": "BusPlace",
+												"name": "Busplace",
 												"type": "String"
 											},
 											"sink": {
@@ -1186,7 +1186,7 @@
 										},
 										{
 											"source": {
-												"name": "BankGrnt",
+												"name": "Bankgrnt",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1196,7 +1196,7 @@
 										},
 										{
 											"source": {
-												"name": "SecDep",
+												"name": "Secdep",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1206,7 +1206,7 @@
 										},
 										{
 											"source": {
-												"name": "TrdDep",
+												"name": "Trddep",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1216,7 +1216,7 @@
 										},
 										{
 											"source": {
-												"name": "crlmt_0000",
+												"name": "Crlmt0000",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1226,7 +1226,7 @@
 										},
 										{
 											"source": {
-												"name": "crlmt_1001",
+												"name": "Crlmt1001",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1236,7 +1236,7 @@
 										},
 										{
 											"source": {
-												"name": "crlmt_1002",
+												"name": "Crlmt1002",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1246,7 +1246,7 @@
 										},
 										{
 											"source": {
-												"name": "crlmt_1003",
+												"name": "Crlmt1003",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1256,7 +1256,7 @@
 										},
 										{
 											"source": {
-												"name": "crlmt_1004",
+												"name": "Crlmt1004",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1266,7 +1266,7 @@
 										},
 										{
 											"source": {
-												"name": "crlmt_1005",
+												"name": "Crlmt1005",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1276,7 +1276,7 @@
 										},
 										{
 											"source": {
-												"name": "crlmt_1006",
+												"name": "Crlmt1006",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1286,7 +1286,7 @@
 										},
 										{
 											"source": {
-												"name": "crlmt_1007",
+												"name": "Crlmt1007",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1296,7 +1296,7 @@
 										},
 										{
 											"source": {
-												"name": "crlmt_1008",
+												"name": "Crlmt1008",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1306,7 +1306,7 @@
 										},
 										{
 											"source": {
-												"name": "crlmt_1010",
+												"name": "Crlmt1010",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1316,7 +1316,7 @@
 										},
 										{
 											"source": {
-												"name": "crlmt_1012",
+												"name": "Crlmt1012",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1326,7 +1326,7 @@
 										},
 										{
 											"source": {
-												"name": "crlmt_1020",
+												"name": "Crlmt1020",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1336,7 +1336,7 @@
 										},
 										{
 											"source": {
-												"name": "crlmt_1500",
+												"name": "Crlmt1500",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1346,7 +1346,7 @@
 										},
 										{
 											"source": {
-												"name": "crlmt_3000",
+												"name": "Crlmt3000",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1356,7 +1356,7 @@
 										},
 										{
 											"source": {
-												"name": "crlmt_3002",
+												"name": "Crlmt3002",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1366,7 +1366,7 @@
 										},
 										{
 											"source": {
-												"name": "crlmt_4010",
+												"name": "Crlmt4010",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1376,7 +1376,7 @@
 										},
 										{
 											"source": {
-												"name": "crlmt_4020",
+												"name": "Crlmt4020",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1386,7 +1386,7 @@
 										},
 										{
 											"source": {
-												"name": "crlmt_5000",
+												"name": "Crlmt5000",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1396,7 +1396,7 @@
 										},
 										{
 											"source": {
-												"name": "crlmt",
+												"name": "Crlmt",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1406,7 +1406,7 @@
 										},
 										{
 											"source": {
-												"name": "IndLmt",
+												"name": "Indlmt",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1416,7 +1416,7 @@
 										},
 										{
 											"source": {
-												"name": "TotalAmt",
+												"name": "Totalamt",
 												"type": "Decimal"
 											},
 											"sink": {
@@ -1426,7 +1426,7 @@
 										},
 										{
 											"source": {
-												"name": "RiskCat",
+												"name": "Riskcat",
 												"type": "String"
 											},
 											"sink": {
@@ -1436,7 +1436,7 @@
 										},
 										{
 											"source": {
-												"name": "GSTPANCHK",
+												"name": "Gstpanchk",
 												"type": "String"
 											},
 											"sink": {
@@ -1446,7 +1446,7 @@
 										},
 										{
 											"source": {
-												"name": "ContactPerName",
+												"name": "Contactpername",
 												"type": "String"
 											},
 											"sink": {
@@ -1456,7 +1456,7 @@
 										},
 										{
 											"source": {
-												"name": "MfmsRTMob",
+												"name": "Mfmsrtmob",
 												"type": "String"
 											},
 											"sink": {
@@ -1466,7 +1466,7 @@
 										},
 										{
 											"source": {
-												"name": "MfmsWHMob",
+												"name": "Mfmswhmob",
 												"type": "String"
 											},
 											"sink": {
@@ -1476,7 +1476,7 @@
 										},
 										{
 											"source": {
-												"name": "CustGroup",
+												"name": "Custgroup",
 												"type": "String"
 											},
 											"sink": {
@@ -1486,7 +1486,7 @@
 										},
 										{
 											"source": {
-												"name": "pltyp",
+												"name": "Pltyp",
 												"type": "String"
 											},
 											"sink": {
@@ -1496,7 +1496,7 @@
 										},
 										{
 											"source": {
-												"name": "AccGrpDesc",
+												"name": "Accgrpdesc",
 												"type": "String"
 											},
 											"sink": {
