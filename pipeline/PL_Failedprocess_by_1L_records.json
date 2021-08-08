@@ -7,7 +7,7 @@
 				"type": "Until",
 				"dependsOn": [
 					{
-						"activity": "Execute Pipeline1",
+						"activity": "Set variable1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -1592,6 +1592,26 @@
 						}
 					}
 				}
+			},
+			{
+				"name": "Set variable1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Execute Pipeline1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "eSize",
+					"value": {
+						"value": "@activity('Execute Pipeline1').output",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
@@ -1622,6 +1642,9 @@
 			"skipTmp": {
 				"type": "String",
 				"defaultValue": "0"
+			},
+			"eSize": {
+				"type": "String"
 			}
 		},
 		"folder": {
