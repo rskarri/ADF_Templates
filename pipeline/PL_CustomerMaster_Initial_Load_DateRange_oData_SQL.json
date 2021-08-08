@@ -1884,7 +1884,7 @@
 					"waitOnCompletion": true,
 					"parameters": {
 						"pCount": {
-							"value": "@variables('startValue')",
+							"value": "@pipeline().parameters.P_StartDate",
 							"type": "Expression"
 						}
 					}
