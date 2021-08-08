@@ -7,7 +7,7 @@
 				"type": "Until",
 				"dependsOn": [
 					{
-						"activity": "Set variable1",
+						"activity": "EntitySize",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@activity('Execute Pipeline1').output",
+						"value": "@lessOrEquals(int(variables('skip')), int(variables('eSzie')))",
 						"type": "Expression"
 					},
 					"activities": [
@@ -1603,7 +1603,7 @@
 				}
 			},
 			{
-				"name": "Set variable1",
+				"name": "EntitySize",
 				"type": "SetVariable",
 				"dependsOn": [
 					{
