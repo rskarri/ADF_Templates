@@ -21,49 +21,9 @@
 					},
 					"activities": [
 						{
-							"name": "counter",
-							"type": "SetVariable",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "counter",
-								"value": {
-									"value": "@variables('tmpCounter')",
-									"type": "Expression"
-								}
-							}
-						},
-						{
-							"name": "tmp",
-							"type": "SetVariable",
-							"dependsOn": [
-								{
-									"activity": "counter",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "tmpCounter",
-								"value": {
-									"value": "@string(add(int(variables('counter')),1))",
-									"type": "Expression"
-								}
-							}
-						},
-						{
 							"name": "Skip",
 							"type": "SetVariable",
-							"dependsOn": [
-								{
-									"activity": "tmp",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
 								"variableName": "skip",
