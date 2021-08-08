@@ -422,6 +422,10 @@
 			"topMax": {
 				"type": "String",
 				"defaultValue": "100000"
+			},
+			"vEntitySetName": {
+				"type": "String",
+				"defaultValue": "CustomerMasterSet"
 			}
 		},
 		"folder": {

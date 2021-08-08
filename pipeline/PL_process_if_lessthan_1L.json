@@ -1470,8 +1470,14 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DS_SAP_oData_CustomerMaster",
-									"type": "DatasetReference"
+									"referenceName": "DS_SAP_OData_Dynamic",
+									"type": "DatasetReference",
+									"parameters": {
+										"EntitySetName": {
+											"value": "@pipeline().parameters.pEntitySet",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [
@@ -1530,6 +1536,9 @@
 				"type": "string"
 			},
 			"vColName": {
+				"type": "string"
+			},
+			"pEntitySet": {
 				"type": "string"
 			}
 		},
