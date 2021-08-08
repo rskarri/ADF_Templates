@@ -9,7 +9,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@if(greater(int(variables('vcount')),int(pipeline().parameters.topMax)),'true','false')",
+						"value": "@if(greater(int(pipeline().parameters.vOdataCount),int(pipeline().parameters.topMax)),'true','false')",
 						"type": "Expression"
 					},
 					"ifFalseActivities": [
@@ -1490,13 +1490,13 @@
 					],
 					"ifTrueActivities": [
 						{
-							"name": "Execute Pipeline Failed",
+							"name": "Execute if More than 1L",
 							"type": "ExecutePipeline",
 							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
 								"pipeline": {
-									"referenceName": "PL_Failedprocess_by_1L_records",
+									"referenceName": "PL_Process_If_Morethan_1L_records",
 									"type": "PipelineReference"
 								},
 								"waitOnCompletion": true,
@@ -1524,6 +1524,9 @@
 				"type": "string"
 			},
 			"topMax": {
+				"type": "string"
+			},
+			"vOdataCount": {
 				"type": "string"
 			}
 		},

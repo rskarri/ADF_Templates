@@ -1585,7 +1585,7 @@
 										"userProperties": [],
 										"typeProperties": {
 											"pipeline": {
-												"referenceName": "PL_Failedprocess_by_1L_records",
+												"referenceName": "PL_Process_If_Morethan_1L_records",
 												"type": "PipelineReference"
 											},
 											"waitOnCompletion": true,
