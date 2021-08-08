@@ -119,7 +119,11 @@
 													"value": "@variables('oDataCount')",
 													"type": "Expression"
 												},
-												"vColName": "CreAt"
+												"vColName": "CreAt",
+												"pEntitySet": {
+													"value": "@variables('vEntitySetName')",
+													"type": "Expression"
+												}
 											}
 										}
 									}
