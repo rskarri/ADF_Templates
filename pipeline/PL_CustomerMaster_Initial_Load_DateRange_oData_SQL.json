@@ -7,7 +7,7 @@
 				"type": "Until",
 				"dependsOn": [
 					{
-						"activity": "startValuefomPipeline",
+						"activity": "Set count",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -1862,6 +1862,60 @@
 				"linkedServiceName": {
 					"referenceName": "LS_AzureSqlDatabase",
 					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "getCountWeb",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "startValuefomPipeline",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "http://172.26.2.228:8000/sap/opu/odata/sap/ZCUST_DETAILS2_CDS_CDS/ZCUST_DETAILS2_CDS/$count?$filter=CreAt%20eq%20datetime%272019-10-16T00:00:00%27%20and%20SOrg%20eq%20%27FIND%27",
+						"type": "Expression"
+					},
+					"connectVia": {
+						"referenceName": "integrationRuntime-SAP-HANA",
+						"type": "IntegrationRuntimeReference"
+					},
+					"method": "GET",
+					"headers": {
+						"Authorization": "Basic Y2FyYnluZXRlY2g6V2VsY29tZUAy"
+					}
+				}
+			},
+			{
+				"name": "Set count",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "getCountWeb",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "count",
+					"value": {
+						"value": "@activity('getCountWeb').output.Response",
+						"type": "Expression"
+					}
 				}
 			}
 		],
