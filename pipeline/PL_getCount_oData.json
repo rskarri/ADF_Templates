@@ -26,7 +26,8 @@
 					"method": "GET",
 					"headers": {
 						"Authorization": "Basic Y2FyYnluZXRlY2g6V2VsY29tZUAy"
-					}
+					},
+					"disableCertValidation": true
 				}
 			},
 			{
