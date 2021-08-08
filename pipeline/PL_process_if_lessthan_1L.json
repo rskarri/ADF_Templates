@@ -29,7 +29,7 @@
 								"source": {
 									"type": "ODataSource",
 									"query": {
-										"value": "$filter=CreAt eq datetime'@{pipeline().parameters.pfromDateRZ}'&format=json",
+										"value": "$filter=pipeline().parameters.vColName eq datetime'@{pipeline().parameters.pfromDateRZ}'&format=json",
 										"type": "Expression"
 									},
 									"httpRequestTimeout": "00:30:00"
@@ -1527,6 +1527,9 @@
 				"type": "string"
 			},
 			"vOdataCount": {
+				"type": "string"
+			},
+			"vColName": {
 				"type": "string"
 			}
 		},

@@ -9,7 +9,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@greater(int(variables('skip')), int(variables('eSzie'))) ",
+						"value": "@greater(int(variables('skip')), int(variables('eSize'))) ",
 						"type": "Expression"
 					},
 					"activities": [
@@ -69,7 +69,7 @@
 								"source": {
 									"type": "ODataSource",
 									"query": {
-										"value": "$filter=CreAt eq datetime'@{pipeline().parameters.pp}'&$skip=@{variables('skip')}&$top=@{variables('top')}&format=json",
+										"value": "$filter=pipeline().parameters.vColName eq datetime'@{pipeline().parameters.pp}'&$skip=@{variables('skip')}&$top=@{variables('top')}&format=json",
 										"type": "Expression"
 									},
 									"httpRequestTimeout": "00:30:00"
@@ -1518,7 +1518,10 @@
 									"referenceName": "DS_AzureSqlTable_Dynmamic",
 									"type": "DatasetReference",
 									"parameters": {
-										"SQLTableName": "CustomerMaster"
+										"SQLTableName": {
+											"value": "@pipeline().parameters.sqlTable",
+											"type": "Expression"
+										}
 									}
 								}
 							]
@@ -1533,6 +1536,12 @@
 				"type": "string"
 			},
 			"sqlTable": {
+				"type": "string"
+			},
+			"pOdataSize": {
+				"type": "string"
+			},
+			"vColName": {
 				"type": "string"
 			}
 		},
@@ -1549,7 +1558,7 @@
 				"type": "String",
 				"defaultValue": "0"
 			},
-			"eSzie": {
+			"eSize": {
 				"type": "String"
 			},
 			"fFlag": {

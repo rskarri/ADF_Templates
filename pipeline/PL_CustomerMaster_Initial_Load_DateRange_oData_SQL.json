@@ -114,7 +114,12 @@
 												"topMax": {
 													"value": "@variables('topMax')",
 													"type": "Expression"
-												}
+												},
+												"vOdataCount": {
+													"value": "@variables('oDataCount')",
+													"type": "Expression"
+												},
+												"vColName": "CreAt"
 											}
 										}
 									}
