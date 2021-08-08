@@ -2,7 +2,7 @@
 	"name": "DS_SAP_OData_Dynamic",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "OData_SAP_HANA",
+			"referenceName": "LS_SAP_OData",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
