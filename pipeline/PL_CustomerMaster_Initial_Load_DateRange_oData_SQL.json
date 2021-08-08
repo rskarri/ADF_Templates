@@ -7,7 +7,7 @@
 				"type": "Until",
 				"dependsOn": [
 					{
-						"activity": "Execute Pipeline1",
+						"activity": "startValuefomPipeline",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -1862,32 +1862,6 @@
 				"linkedServiceName": {
 					"referenceName": "LS_AzureSqlDatabase",
 					"type": "LinkedServiceReference"
-				}
-			},
-			{
-				"name": "Execute Pipeline1",
-				"type": "ExecutePipeline",
-				"dependsOn": [
-					{
-						"activity": "startValuefomPipeline",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [],
-				"typeProperties": {
-					"pipeline": {
-						"referenceName": "PL_getCount_oData",
-						"type": "PipelineReference"
-					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"pCount": {
-							"value": "@variables('startValue')",
-							"type": "Expression"
-						}
-					}
 				}
 			}
 		],
