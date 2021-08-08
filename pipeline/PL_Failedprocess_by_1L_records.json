@@ -1575,22 +1575,31 @@
 				}
 			},
 			{
-				"name": "Execute Pipeline1",
-				"type": "ExecutePipeline",
+				"name": "getCountWeb",
+				"type": "WebActivity",
 				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
 				"userProperties": [],
 				"typeProperties": {
-					"pipeline": {
-						"referenceName": "PL_getCount_oData",
-						"type": "PipelineReference"
+					"url": {
+						"value": "http://172.26.2.228:8000/sap/opu/odata/sap/ZCUST_DETAILS2_CDS_CDS/ZCUST_DETAILS2_CDS/$count?$filter=CreAt ge datetime'@{pipeline().parameters.pp}'",
+						"type": "Expression"
 					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"pStartValue": {
-							"value": "@pipeline().parameters.pp",
-							"type": "Expression"
-						}
-					}
+					"connectVia": {
+						"referenceName": "integrationRuntime-SAP-HANA",
+						"type": "IntegrationRuntimeReference"
+					},
+					"method": "GET",
+					"headers": {
+						"Authorization": "Basic Y2FyYnluZXRlY2g6V2VsY29tZUAy"
+					},
+					"disableCertValidation": true
 				}
 			},
 			{
@@ -1598,7 +1607,7 @@
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "Execute Pipeline1",
+						"activity": "getCountWeb",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -1606,9 +1615,9 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "eSize",
+					"variableName": "eSzie",
 					"value": {
-						"value": "@activity('Execute Pipeline1').output",
+						"value": "@activity('getCountWeb').output.Response",
 						"type": "Expression"
 					}
 				}
@@ -1643,7 +1652,7 @@
 				"type": "String",
 				"defaultValue": "0"
 			},
-			"eSize": {
+			"eSzie": {
 				"type": "String"
 			}
 		},
