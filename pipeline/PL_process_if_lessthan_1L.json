@@ -1514,6 +1514,18 @@
 									"sqlTable": {
 										"value": "@pipeline().parameters.pSQL_Table",
 										"type": "Expression"
+									},
+									"pOdataSize": {
+										"value": "@pipeline().parameters.vOdataCount",
+										"type": "Expression"
+									},
+									"vColName": {
+										"value": "@pipeline().parameters.vColName",
+										"type": "Expression"
+									},
+									"pEntitySet": {
+										"value": "@pipeline().parameters.pEntitySet",
+										"type": "Expression"
 									}
 								}
 							}
