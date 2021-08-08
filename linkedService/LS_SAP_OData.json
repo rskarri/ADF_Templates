@@ -8,7 +8,7 @@
 			"url": "http://172.26.2.228:8000/sap/opu/odata/sap/ZCDSODATAAZ_SRV",
 			"authenticationType": "Basic",
 			"userName": "carbynetech",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI5ZjNmMjFmYS03NzEyLTRhNTgtYjgyMy01MWQ0YWJhOGJlNmQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJmYmU1NzVlMi05ODNhLTQ5MTctODBiYy1kNTZlNzlmMDdiNTYiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "integrationRuntime-SAP-HANA",
