@@ -1592,14 +1592,6 @@
 			}
 		},
 		"variables": {
-			"counter": {
-				"type": "String",
-				"defaultValue": "0"
-			},
-			"tmpCounter": {
-				"type": "String",
-				"defaultValue": "0"
-			},
 			"skip": {
 				"type": "String",
 				"defaultValue": "0"
