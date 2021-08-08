@@ -1584,7 +1584,13 @@
 						"referenceName": "PL_getCount_oData",
 						"type": "PipelineReference"
 					},
-					"waitOnCompletion": true
+					"waitOnCompletion": true,
+					"parameters": {
+						"pStartValue": {
+							"value": "@pipeline().parameters.pp",
+							"type": "Expression"
+						}
+					}
 				}
 			}
 		],
