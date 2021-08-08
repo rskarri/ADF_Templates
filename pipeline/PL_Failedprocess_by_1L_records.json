@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@greater(int(variables('skip')), add( int(variables('eSzie')), int(variables('top')))) ",
+						"value": "@greater(int(variables('skip')), int(variables('eSzie'))) ",
 						"type": "Expression"
 					},
 					"activities": [
