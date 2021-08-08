@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"url": {
-						"value": "@http://172.26.2.228:8000/sap/opu/odata/sap/ZCUST_DETAILS2_CDS_CDS/ZCUST_DETAILS2_CDS/$count?$filter=CreAt ge datetime'@{pipeline().parameters.pCount}'",
+						"value": "http://172.26.2.228:8000/sap/opu/odata/sap/ZCUST_DETAILS2_CDS_CDS/ZCUST_DETAILS2_CDS/$count?$filter=CreAt ge datetime'@{pipeline().parameters.pCount}'",
 						"type": "Expression"
 					},
 					"connectVia": {
