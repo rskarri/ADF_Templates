@@ -43,7 +43,7 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "count",
+					"variableName": "vcount",
 					"value": {
 						"value": "@activity('getCountWeb').output.Response",
 						"type": "Expression"
