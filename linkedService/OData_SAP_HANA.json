@@ -5,10 +5,10 @@
 		"annotations": [],
 		"type": "OData",
 		"typeProperties": {
-			"url": "http://172.26.150.72:8001/sap/opu/odata/sap/ZITRSDBILLCDS_SRV",
+			"url": "http://172.26.2.228:8000/sap/opu/odata/sap/ZCDSODATAAZ_SRV",
 			"authenticationType": "Basic",
 			"userName": "Carbynetech",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJlYmFjZDc5NS1jMmQ4LTQzNGYtOTEzMy0xYjkyN2ViZWEzYzUiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI3MzA5YWY3Yy00MTY4LTQwODAtYWFmNi03MmM2ZjJlMTRhNjYiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "integrationRuntime-SAP-HANA",
