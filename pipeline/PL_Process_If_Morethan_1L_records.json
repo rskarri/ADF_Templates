@@ -142,9 +142,6 @@
 				"type": "String",
 				"defaultValue": "0"
 			},
-			"eSize": {
-				"type": "String"
-			},
 			"fFlag": {
 				"type": "Boolean",
 				"defaultValue": false
