@@ -381,7 +381,7 @@
 							"type": "String"
 						},
 						"D_ColName": {
-							"value": "CreAt",
+							"value": "CreatedOn",
 							"type": "String"
 						}
 					}
