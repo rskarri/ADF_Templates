@@ -9,7 +9,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"expression": {
-						"value": "@greater(int(variables('skip')), int(variables('eSize'))) ",
+						"value": "@greater(int(variables('skip')), int(pipeline().parameters.pOdataSize))",
 						"type": "Expression"
 					},
 					"activities": [
