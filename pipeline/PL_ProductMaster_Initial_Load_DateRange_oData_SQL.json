@@ -1,0 +1,442 @@
+{
+	"name": "PL_ProductMaster_Initial_Load_DateRange_oData_SQL",
+	"properties": {
+		"activities": [
+			{
+				"name": "Loop Copy Activity",
+				"type": "Until",
+				"dependsOn": [
+					{
+						"activity": "startValuefomPipeline",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@bool(variables('flag'))",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "fromDate",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "fromDate",
+								"value": {
+									"value": "@addToTime(variables('startValue'), 1, 'Day')",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "startValue",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "fromDate",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "startValue",
+								"value": {
+									"value": "@variables('fromDate')",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "removeZ",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "startValue",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "fromDateRZ",
+								"value": {
+									"value": "@substring(variables('fromDate'), 0, 18)",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "check startDate endDate",
+							"type": "IfCondition",
+							"dependsOn": [
+								{
+									"activity": "Set vcount",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"expression": {
+									"value": "@if(equals(adddays(variables('startValue'),0),adddays(pipeline().parameters.P_EndDate,1)) , 'true', 'false')",
+									"type": "Expression"
+								},
+								"ifFalseActivities": [
+									{
+										"name": "Process Copy",
+										"type": "ExecutePipeline",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"pipeline": {
+												"referenceName": "PL_process_if_lessthan_1L",
+												"type": "PipelineReference"
+											},
+											"waitOnCompletion": true,
+											"parameters": {
+												"pfromDateRZ": {
+													"value": "@variables('fromDateRZ')",
+													"type": "Expression"
+												},
+												"pSQL_Table": {
+													"value": "@variables('SQL_Table')",
+													"type": "Expression"
+												},
+												"topMax": {
+													"value": "@variables('topMax')",
+													"type": "Expression"
+												},
+												"vOdataCount": {
+													"value": "@variables('oDataCount')",
+													"type": "Expression"
+												},
+												"vColName": "CreatedOn",
+												"pEntitySet": {
+													"value": "@variables('vEntitySetName')",
+													"type": "Expression"
+												}
+											}
+										}
+									}
+								],
+								"ifTrueActivities": [
+									{
+										"name": "set Flag",
+										"type": "SetVariable",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"variableName": "flag",
+											"value": {
+												"value": "@bool('true')",
+												"type": "Expression"
+											}
+										}
+									}
+								]
+							}
+						},
+						{
+							"name": "getCountWeb",
+							"type": "WebActivity",
+							"dependsOn": [
+								{
+									"activity": "removeZ",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"url": {
+									"value": "http://172.26.2.228:8000/sap/opu/odata/sap/ZCUST_DETAILS2_CDS_CDS/ZCUST_DETAILS2_CDS/$count?$filter=CreAt eq datetime'@{variables('fromDateRZ')}'",
+									"type": "Expression"
+								},
+								"connectVia": {
+									"referenceName": "integrationRuntime-SAP-HANA",
+									"type": "IntegrationRuntimeReference"
+								},
+								"method": "GET",
+								"headers": {
+									"Authorization": "Basic Y2FyYnluZXRlY2g6V2VsY29tZUAy"
+								},
+								"disableCertValidation": true
+							}
+						},
+						{
+							"name": "Set vcount",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "getCountWeb",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "oDataCount",
+								"value": {
+									"value": "@activity('getCountWeb').output.Response",
+									"type": "Expression"
+								}
+							}
+						}
+					],
+					"timeout": "0.00:00:00"
+				}
+			},
+			{
+				"name": "startValuefomPipeline",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "delete old records",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "startValue",
+					"value": {
+						"value": "@subtractFromTime(pipeline().parameters.P_StartDate, 1, 'Day')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "updateWaterMark",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "New Watermark Time Value",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SP_update_watermark]",
+					"storedProcedureParameters": {
+						"TabName": {
+							"value": {
+								"value": "@variables('SQL_Table')",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"LastModifiedDate": {
+							"value": {
+								"value": "@activity('New Watermark Date Value').output.firstRow.maxDate",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						},
+						"LastModifiedtime": {
+							"value": {
+								"value": "@activity('New Watermark Time Value').output.firstRow.maxTime",
+								"type": "Expression"
+							},
+							"type": "Timespan"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "New Watermark Date Value",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Loop Copy Activity",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select MAX(Creat ) as maxDate FROM [dbo].[CustomerMaster]",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "New Watermark Time Value",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "New Watermark Date Value",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select MAX(Creon) as maxTime FROM [dbo].[CustomerMaster] where Creon= ( select MAX(Creon ) FROM [dbo].[CustomerMaster])",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "DS_AzureSqlTable",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "delete old records",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[SP_DeleteTable_DateRange]",
+					"storedProcedureParameters": {
+						"D_StartDate": {
+							"value": {
+								"value": "@pipeline().parameters.P_StartDate",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"D_EndDate": {
+							"value": {
+								"value": "@pipeline().parameters.P_EndDate",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"TableName": {
+							"value": {
+								"value": "@variables('SQL_Table')",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"D_ColName": {
+							"value": "CreAt",
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_AzureSqlDatabase",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"P_StartDate": {
+				"type": "string",
+				"defaultValue": "2019-10-14T00:00:00"
+			},
+			"P_EndDate": {
+				"type": "string",
+				"defaultValue": "2019-10-14T00:00:00"
+			}
+		},
+		"variables": {
+			"flag": {
+				"type": "Boolean",
+				"defaultValue": false
+			},
+			"startValue": {
+				"type": "String"
+			},
+			"fromDate": {
+				"type": "String"
+			},
+			"fromDateRZ": {
+				"type": "String"
+			},
+			"SQL_Table": {
+				"type": "String",
+				"defaultValue": "ProductMaster"
+			},
+			"oDataCount": {
+				"type": "String"
+			},
+			"topMax": {
+				"type": "String",
+				"defaultValue": "100000"
+			},
+			"vEntitySetName": {
+				"type": "String",
+				"defaultValue": "ProductMasterSet"
+			}
+		},
+		"folder": {
+			"name": "QA/ProductMaster"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-07-28T11:02:07Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
