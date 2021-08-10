@@ -15,11 +15,7 @@
 		},
 		"annotations": [],
 		"type": "SapHanaTable",
-		"schema": [],
-		"typeProperties": {
-			"schema": "SAPHANADB",
-			"table": "ZSDBILLCDS"
-		}
+		"schema": []
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"
 }
