@@ -27,6 +27,21 @@
 					},
 					"enableStaging": false,
 					"parallelCopies": 20,
+					"enableSkipIncompatibleRow": true,
+					"logSettings": {
+						"enableCopyActivityLog": true,
+						"copyActivityLogSettings": {
+							"logLevel": "Warning",
+							"enableReliableLogging": false
+						},
+						"logLocationSettings": {
+							"linkedServiceName": {
+								"referenceName": "LS_AzureDataLakeStorage",
+								"type": "LinkedServiceReference"
+							},
+							"path": "datafactory-data"
+						}
+					},
 					"dataIntegrationUnits": 16,
 					"translator": {
 						"type": "TabularTranslator",
