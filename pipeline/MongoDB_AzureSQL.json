@@ -136,17 +136,37 @@
 				"inputs": [
 					{
 						"referenceName": "DS_MongoDbV2Collection1",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"MD_Table_Name": {
+								"value": "@pipeline().parameters.MongoDBTable_Name",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_AzureSqlTable_RetailStockNew",
-						"type": "DatasetReference"
+						"referenceName": "DS_AzureSqlTable_Dynmamic",
+						"type": "DatasetReference",
+						"parameters": {
+							"SQLTableName": {
+								"value": "@pipeline().parameters.SQLTable_Name",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
 		],
+		"parameters": {
+			"MongoDBTable_Name": {
+				"type": "string"
+			},
+			"SQLTable_Name": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
