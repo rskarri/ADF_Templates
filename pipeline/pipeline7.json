@@ -46,7 +46,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_AzureSqlTable",
+						"referenceName": "DS_AzureSqlTable_Dynmamic",
 						"type": "DatasetReference"
 					}
 				]
