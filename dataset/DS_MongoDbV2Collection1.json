@@ -5,11 +5,19 @@
 			"referenceName": "LS_MongoDb",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"MD_Table_Name": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "MongoDbV2Collection",
 		"schema": [],
 		"typeProperties": {
-			"collection": "retailer_stock_new"
+			"collection": {
+				"value": "@dataset().MD_Table_Name",
+				"type": "Expression"
+			}
 		}
 	}
 }
