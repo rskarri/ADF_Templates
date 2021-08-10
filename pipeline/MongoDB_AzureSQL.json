@@ -27,7 +27,103 @@
 					},
 					"enableStaging": false,
 					"parallelCopies": 20,
-					"dataIntegrationUnits": 16
+					"dataIntegrationUnits": 16,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['report_id']"
+								},
+								"sink": {
+									"name": "report_id",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['state_id']"
+								},
+								"sink": {
+									"name": "state_id",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['state_name']"
+								},
+								"sink": {
+									"name": "state_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['from_date']"
+								},
+								"sink": {
+									"name": "from_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"path": "$['to_date']"
+								},
+								"sink": {
+									"name": "to_date",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"path": "$['status']"
+								},
+								"sink": {
+									"name": "status",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['username']"
+								},
+								"sink": {
+									"name": "username",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['company']"
+								},
+								"sink": {
+									"name": "company",
+									"type": "Int32"
+								}
+							},
+							{
+								"source": {
+									"path": "$['company_name']"
+								},
+								"sink": {
+									"name": "company_name",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"path": "$['password']"
+								},
+								"sink": {
+									"name": "password",
+									"type": "String"
+								}
+							}
+						],
+						"collectionReference": ""
+					}
 				},
 				"inputs": [
 					{
